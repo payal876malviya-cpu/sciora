@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Units and Measurements — Class 11 Physics | Sciora</title>
+<meta name="description" content="Class 11 Physics Chapter 1: Units and Measurements — easy explanations, formulas, solved numericals, practice MCQs and revision notes on Sciora.">
+<meta name="theme-color" content="#070b14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23070b14'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%2322d3ee'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cyan:#22d3ee;--violet:#8b5cf6;--emerald:#34d399;--amber:#fbbf24;--rose:#fb7185;
+  --bg:#070b14;--surface:#0e1524;--surface2:#131c30;--border:rgba(255,255,255,.1);
+  --text:#eaf0fb;--muted:#98a5bf;--heading:#fff;--accent:#22d3ee;--accent-ink:#06121b;
+  --ok:#34d399;--bad:#fb7185;--shadow:0 18px 40px -22px rgba(0,0,0,.7);
+  --hh:56px;--r:16px;--ease:cubic-bezier(.22,.7,.2,1);
+  --fd:"Sora","Segoe UI",system-ui,sans-serif;--fb:"Inter","Segoe UI",system-ui,sans-serif;
+}
+[data-theme="light"]{
+  --bg:#f7f9fd;--surface:#fff;--surface2:#eef3fb;--border:rgba(13,21,38,.12);
+  --text:#1c2536;--muted:#5a6782;--heading:#0b1220;--accent:#0891b2;--accent-ink:#fff;
+  --ok:#059669;--bad:#e11d48;--shadow:0 14px 30px -20px rgba(15,23,42,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--fb);line-height:1.7;font-size:16px;-webkit-text-size-adjust:100%}
+h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:1.25;margin:0 0 .5em}
+h2{font-size:1.5rem}h3{font-size:1.15rem;margin-top:1.6em}h4{font-size:1rem;margin-top:1.2em}
+p{margin:.5em 0 1em}a{color:var(--accent)}
+sup,sub{line-height:0}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* header */
+.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.top-in{height:var(--hh);display:flex;align-items:center;gap:12px}
+.back{text-decoration:none;font-weight:600;font-size:.9rem;white-space:nowrap;padding:8px 10px;border-radius:10px;border:1px solid var(--border);color:var(--text)}
+.back:hover{border-color:var(--accent);color:var(--accent)}
+.ttl{flex:1;min-width:0;line-height:1.2}
+.ttl small{display:block;color:var(--accent);font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.ttl b{font-family:var(--fd);font-size:.95rem;color:var(--heading);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-size:18px;display:grid;place-items:center}
+.icon-btn:hover{border-color:var(--accent)}
+.pbar{height:3px;background:var(--border)}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .5s var(--ease)}
+
+/* tabs */
+.tabs{position:sticky;top:calc(var(--hh) + 4px);z-index:20;background:var(--bg);border-bottom:1px solid var(--border)}
+.tabs-in{display:flex;gap:6px;overflow-x:auto;padding:10px 16px;scrollbar-width:none;max-width:980px;margin:0 auto}
+.tabs-in::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:1px solid var(--border);background:var(--surface);color:var(--muted);font:600 .88rem var(--fb);padding:9px 16px;border-radius:999px;cursor:pointer;transition:.2s}
+.tab:hover{color:var(--text);border-color:var(--accent)}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+/* panels */
+main{padding:24px 0 60px}
+.panel[hidden],.topic[hidden]{display:none}
+.panel,.topic{animation:rise .45s var(--ease)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.hero{background:linear-gradient(135deg,rgba(34,211,238,.14),rgba(139,92,246,.14)),var(--surface);border:1px solid var(--border);border-radius:22px;padding:26px 22px;margin-bottom:20px}
+.hero h1{font-size:clamp(1.6rem,5vw,2.4rem);margin:.2em 0}
+.eyebrow{color:var(--accent);font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.tcard{text-align:left;font:inherit;color:inherit;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;transition:.2s var(--ease);display:block;width:100%}
+.tcard:hover{transform:translateY(-3px);border-color:var(--accent)}
+.tcard .n{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted);font-weight:600}
+.tcard h4{margin:.5em 0 .2em;font-size:1rem}
+.tcard p{margin:0;font-size:.86rem;color:var(--muted);line-height:1.5}
+.tcard.done{border-color:var(--ok)}
+.tcard.done .st{color:var(--ok)}
+.objs{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.objs li{padding-left:30px;position:relative}
+.objs li::before{content:"✓";position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:50%;background:rgba(34,211,238,.15);color:var(--accent);display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font:600 .92rem var(--fb);border:0;border-radius:12px;padding:12px 20px;background:var(--accent);color:var(--accent-ink);cursor:pointer;transition:.2s}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn.done{background:var(--ok);color:#04130d}
+.sec-title{display:flex;align-items:center;gap:10px;margin:28px 0 12px}
+
+/* topic nav */
+.pills{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;margin-bottom:8px;scrollbar-width:thin}
+.pill{flex:0 0 auto;border:1px solid var(--border);background:var(--surface);color:var(--muted);font:600 .82rem var(--fb);padding:8px 14px;border-radius:12px;cursor:pointer}
+.pill.on{border-color:var(--accent);color:var(--accent);background:rgba(34,211,238,.1)}
+.pill.ok::after{content:" ✓";color:var(--ok)}
+.topic>h2{display:flex;gap:12px;align-items:center}
+.topic>h2 span{flex:0 0 auto;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#06121b;font-size:1rem}
+.callout{border-left:4px solid var(--accent);background:rgba(34,211,238,.08);padding:12px 16px;border-radius:0 12px 12px 0;margin:16px 0}
+.callout.warn{border-color:var(--amber);background:rgba(251,191,36,.1)}
+.callout.tip{border-color:var(--emerald);background:rgba(52,211,153,.1)}
+.callout b:first-child{color:var(--heading)}
+.formula{font-family:"Cambria Math","Times New Roman",serif;font-size:1.15rem;text-align:center;background:var(--surface2);border:1px dashed var(--border);border-radius:12px;padding:12px;margin:12px 0;overflow-x:auto}
+.eq-box{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:16px 0;font-family:var(--fd)}
+.eq-box .b{padding:12px 16px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);text-align:center;min-width:90px}
+.eq-box .b small{display:block;color:var(--muted);font:500 .72rem var(--fb)}
+.eq-box .b strong{font-size:1.3rem;color:var(--accent)}
+.eq-box .op{font-size:1.4rem;color:var(--muted)}
+.tw{overflow-x:auto;margin:12px 0;border:1px solid var(--border);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:420px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--surface2);color:var(--heading);font-family:var(--fd);font-size:.8rem;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.diagram{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin:16px 0;text-align:center}
+.diagram svg{max-width:100%;height:auto}
+.diagram figcaption,.cap{font-size:.84rem;color:var(--muted);margin-top:8px}
+.diagram .ln{stroke:var(--muted)}.diagram .tx{fill:var(--text);font:500 12px var(--fb)}.diagram .tx2{fill:var(--muted);font:500 11px var(--fb)}
+.two{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:14px 0}
+.mini{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:14px}
+.mini h4{margin:0 0 6px}.mini p{margin:0;font-size:.92rem}
+ul.clean,ol.steps{padding-left:1.2em;margin:.5em 0 1em}
+ul.clean li,ol.steps li{margin:.35em 0}
+.tabnav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px;padding-top:18px;border-top:1px solid var(--border)}
+
+/* sig fig tool */
+.tool{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin:16px 0}
+.tool input{width:100%;font:600 1.1rem var(--fb);padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text)}
+.tool .out{min-height:64px;margin-top:12px;font-size:1.5rem;font-family:var(--fd);letter-spacing:.04em;word-break:break-all}
+.tool .out .sg{color:var(--accent);border-bottom:3px solid var(--accent)}
+.tool .out .ns{color:var(--muted)}
+.tool .res{font:500 .95rem var(--fb);letter-spacing:0;margin-top:6px;color:var(--text)}
+
+/* details */
+details{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin:12px 0;overflow:hidden}
+summary{cursor:pointer;padding:14px 16px;font-weight:600;color:var(--heading);list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋";color:var(--accent);font-size:1.1rem;flex:0 0 auto}
+details[open]>summary::after{content:"－"}
+details[open]>summary{border-bottom:1px solid var(--border)}
+.dbody{padding:4px 16px 14px}
+.num summary b{color:var(--accent);margin-right:6px}
+.ans{background:rgba(52,211,153,.12);border:1px solid var(--ok);border-radius:10px;padding:10px 14px;margin-top:10px;font-weight:600}
+
+/* formula cards */
+.fcard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0}
+.fcard h4{margin:0 0 4px;color:var(--accent)}
+.fcard p{margin:.3em 0;font-size:.93rem}
+.fcard .formula{margin:8px 0}
+
+/* quiz */
+.qtop{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);font-weight:600;margin-bottom:8px}
+.qbar{height:6px;background:var(--border);border-radius:9px;overflow:hidden;margin-bottom:18px}
+.qbar i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s var(--ease)}
+.qtext{font:600 1.1rem var(--fd);color:var(--heading);margin-bottom:16px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:center;text-align:left;font:500 .98rem var(--fb);color:var(--text);background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:13px 14px;cursor:pointer;transition:.18s}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt .l{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-weight:700;font-size:.8rem;border:1px solid var(--border)}
+.opt.right{border-color:var(--ok);background:rgba(52,211,153,.14)}
+.opt.wrong{border-color:var(--bad);background:rgba(251,113,133,.14);animation:shake .35s}
+.opt:disabled{cursor:default}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:.93rem}
+.fb.ok{background:rgba(52,211,153,.12);border:1px solid var(--ok)}
+.fb.no{background:rgba(251,113,133,.12);border:1px solid var(--bad)}
+.score{text-align:center;padding:10px 0}
+.score .big{font:700 3.2rem var(--fd);color:var(--accent);line-height:1.1}
+.score .msg{color:var(--muted);margin:8px 0 18px}
+
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:30px 16px 40px;border-top:1px solid var(--border)}
+@media (min-width:700px){body{font-size:17px}.hero{padding:36px}.card{padding:26px}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="back" href="study.html" aria-label="Back to Sciora study dashboard">← Study</a>
+    <div class="ttl"><small>Class 11 · Physics · Chapter 1</small><b>Units and Measurements</b></div>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch to light theme">🌙</button>
+  </div>
+  <div class="pbar" role="progressbar" aria-label="Chapter progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pbarWrap"><i id="pbar"></i></div>
+</header>
+
+<nav class="tabs" aria-label="Chapter sections">
+  <div class="tabs-in" role="tablist">
+    <button class="tab" role="tab" data-tab="overview" type="button">🏠 Overview</button>
+    <button class="tab" role="tab" data-tab="learn" type="button">📖 Learn</button>
+    <button class="tab" role="tab" data-tab="formulas" type="button">∑ Formulas</button>
+    <button class="tab" role="tab" data-tab="numericals" type="button">✏️ Numericals</button>
+    <button class="tab" role="tab" data-tab="practice" type="button">🎯 Practice</button>
+    <button class="tab" role="tab" data-tab="notes" type="button">📝 Notes</button>
+  </div>
+</nav>
+
+<main id="main"><div class="wrap">
+
+<!-- ================= OVERVIEW ================= -->
+<section class="panel" id="p-overview">
+  <div class="hero">
+    <div class="eyebrow">Class 11 · Physics · Chapter 1</div>
+    <h1>Units and Measurements</h1>
+    <p>Physics is built on measurement. Before we can describe motion, force or energy, we must agree on <b>what to measure</b> and <b>how to write it</b>. This chapter gives you that common language — units, dimensions, significant figures and errors.</p>
+    <div class="row"><button class="btn" type="button" data-open="0">Start learning →</button><span id="progText" class="cap" style="margin:0"></span></div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Learning objectives</h2>
+    <p>After this chapter you will be able to:</p>
+    <ul class="objs">
+      <li>Explain what a physical quantity is and tell fundamental from derived quantities.</li>
+      <li>Use the SI system, its seven base units and common prefixes.</li>
+      <li>Count significant figures and round answers correctly.</li>
+      <li>Write the dimensional formula of any physical quantity.</li>
+      <li>Check equations, convert units and derive simple relations using dimensions.</li>
+      <li>Calculate absolute, relative and percentage errors, and combine errors.</li>
+      <li>Distinguish accuracy from precision.</li>
+    </ul>
+  </div>
+
+  <div class="sec-title"><h2 style="margin:0">📚 Topics in this chapter</h2></div>
+  <div class="grid" id="topicGrid"></div>
+
+  <div class="sec-title"><h2 style="margin:0">🧭 Also in this module</h2></div>
+  <div class="grid">
+    <button class="tcard" type="button" data-tab-go="formulas"><h4>∑ Formulas</h4><p>All key formulas and dimensional formulae in one place.</p></button>
+    <button class="tcard" type="button" data-tab-go="numericals"><h4>✏️ Solved numericals</h4><p>8 step-by-step problems for beginners.</p></button>
+    <button class="tcard" type="button" data-tab-go="practice"><h4>🎯 Practice zone</h4><p>16 MCQs with instant feedback and score.</p></button>
+    <button class="tcard" type="button" data-tab-go="notes"><h4>📝 Revision notes</h4><p>Topic-wise notes and a quick revision sheet.</p></button>
+  </div>
+  <p class="cap" style="margin-top:20px"><button class="btn ghost" id="resetBtn" type="button" style="padding:8px 14px;font-size:.8rem">Reset my progress</button></p>
+</section>
+
+<!-- ================= LEARN ================= -->
+<section class="panel" id="p-learn" hidden>
+  <div class="pills" id="pills" role="tablist" aria-label="Topics"></div>
+
+  <!-- Topic 1 -->
+  <article class="topic" data-title="Physical Quantities" data-desc="What can be measured, and how to write a measurement." hidden>
+    <h2><span>1</span>Physical Quantities</h2>
+    <p>Physics is the science of <b>measurement</b>. Anything that can be measured is called a <b>physical quantity</b>. Length, mass, time, speed, temperature and force are all physical quantities. Feelings like love or anger are <i>not</i>, because we cannot measure them with an instrument.</p>
+    <h3>Every measurement has two parts</h3>
+    <div class="eq-box">
+      <div class="b"><small>Physical quantity</small><strong>Length</strong></div><span class="op">=</span>
+      <div class="b"><small>Number (n)</small><strong>120</strong></div><span class="op">×</span>
+      <div class="b"><small>Unit (u)</small><strong>cm</strong></div>
+    </div>
+    <p>If someone says “my desk is 120”, you cannot tell if it is 120 cm, 120 inches or 120 m. The <b>unit</b> gives the number its meaning.</p>
+    <div class="callout tip"><b>Bigger unit → smaller number.</b> The same length can be written as 1.2 m or 120 cm or 1200 mm. The length did not change — only the unit did. In symbols: <b>n₁u₁ = n₂u₂</b>.</div>
+    <h3>Two kinds of physical quantities</h3>
+    <div class="two">
+      <div class="mini"><h4>Scalars</h4><p>Only size (magnitude). Examples: mass, time, temperature, speed.</p></div>
+      <div class="mini"><h4>Vectors</h4><p>Size <i>and</i> direction. Examples: displacement, velocity, force.</p></div>
+    </div>
+    <div class="callout warn"><b>Common mistake:</b> Writing an answer without a unit. In exams, “5” is wrong but “5 m s^-1” is right.</div>
+  </article>
+
+  <!-- Topic 2 -->
+  <article class="topic" data-title="Fundamental &amp; Derived Units" data-desc="Base quantities and the ones built from them." hidden>
+    <h2><span>2</span>Fundamental and Derived Units</h2>
+    <p><b>Fundamental (base) quantities</b> are independent — you cannot get them from other quantities. Their units are <b>fundamental units</b>. <b>Derived quantities</b> are made by combining base quantities, so their units are <b>derived units</b>.</p>
+    <div class="callout tip"><b>Think of it like language:</b> base quantities are the <i>letters</i>; derived quantities are the <i>words</i> made from them.</div>
+    <h3>The 7 base quantities</h3>
+    <p>Length, mass, time, electric current, thermodynamic temperature, amount of substance and luminous intensity.</p>
+    <h3>Examples of derived quantities</h3>
+    <div class="tw"><table>
+      <tr><th>Quantity</th><th>Built from</th><th>Unit</th></tr>
+      <tr><td>Area</td><td>length × length</td><td>m^2</td></tr>
+      <tr><td>Volume</td><td>length × length × length</td><td>m^3</td></tr>
+      <tr><td>Speed</td><td>distance ÷ time</td><td>m s^-1</td></tr>
+      <tr><td>Acceleration</td><td>change in speed ÷ time</td><td>m s^-2</td></tr>
+      <tr><td>Force</td><td>mass × acceleration</td><td>kg m s^-2 = newton (N)</td></tr>
+      <tr><td>Density</td><td>mass ÷ volume</td><td>kg m^-3</td></tr>
+    </table></div>
+    <div class="callout"><b>Dimensionless units:</b> Plane angle (radian, rad) and solid angle (steradian, sr) are derived units with no dimensions.</div>
+  </article>
+
+  <!-- Topic 3 -->
+  <article class="topic" data-title="SI System of Units" data-desc="The worldwide system, base units and prefixes." hidden>
+    <h2><span>3</span>SI System of Units</h2>
+    <p>Earlier, different countries used different systems: <b>CGS</b> (cm, g, s), <b>FPS</b> (foot, pound, s) and <b>MKS</b> (m, kg, s). To avoid confusion, the world adopted the <b>International System of Units (SI)</b> in 1971. Today, science everywhere uses it.</p>
+    <h3>The 7 SI base units</h3>
+    <div class="tw"><table>
+      <tr><th>Quantity</th><th>Unit</th><th>Symbol</th></tr>
+      <tr><td>Length</td><td>metre</td><td>m</td></tr>
+      <tr><td>Mass</td><td>kilogram</td><td>kg</td></tr>
+      <tr><td>Time</td><td>second</td><td>s</td></tr>
+      <tr><td>Electric current</td><td>ampere</td><td>A</td></tr>
+      <tr><td>Temperature</td><td>kelvin</td><td>K</td></tr>
+      <tr><td>Amount of substance</td><td>mole</td><td>mol</td></tr>
+      <tr><td>Luminous intensity</td><td>candela</td><td>cd</td></tr>
+    </table></div>
+    <p class="cap">Since 2019, every SI unit is defined using fixed constants of nature (for example, the speed of light fixes the metre, and Planck’s constant fixes the kilogram).</p>
+    <h3>Prefixes: making units bigger or smaller</h3>
+    <div class="tw"><table>
+      <tr><th>Prefix</th><th>Symbol</th><th>Power of 10</th><th>Prefix</th><th>Symbol</th><th>Power of 10</th></tr>
+      <tr><td>tera</td><td>T</td><td>10^12</td><td>centi</td><td>c</td><td>10^-2</td></tr>
+      <tr><td>giga</td><td>G</td><td>10^9</td><td>milli</td><td>m</td><td>10^-3</td></tr>
+      <tr><td>mega</td><td>M</td><td>10^6</td><td>micro</td><td>µ</td><td>10^-6</td></tr>
+      <tr><td>kilo</td><td>k</td><td>10^3</td><td>nano</td><td>n</td><td>10^-9</td></tr>
+      <tr><td>hecto</td><td>h</td><td>10^2</td><td>pico</td><td>p</td><td>10^-12</td></tr>
+      <tr><td>deca</td><td>da</td><td>10^1</td><td>femto</td><td>f</td><td>10^-15</td></tr>
+    </table></div>
+    <h3>Other useful units</h3>
+    <ul class="clean">
+      <li>1 light year = 9.46 × 10^15 m (distance light travels in one year)</li>
+      <li>1 astronomical unit (AU) = 1.496 × 10^11 m (Earth–Sun distance)</li>
+      <li>1 parsec = 3.08 × 10^16 m</li>
+      <li>1 angstrom (Å) = 10^-10 m</li>
+      <li>1 fermi = 10^-15 m</li>
+      <li>1 atomic mass unit (u) = 1.66 × 10^-27 kg</li>
+      <li>1 litre = 10^-3 m^3</li>
+    </ul>
+  </article>
+
+  <!-- Topic 4 -->
+  <article class="topic" data-title="Significant Figures" data-desc="Digits that matter, rules and rounding." hidden>
+    <h2><span>4</span>Significant Figures</h2>
+    <p>No instrument is perfect. <b>Significant figures</b> are the digits we are sure about, <b>plus one</b> last uncertain digit. They show how <i>reliable</i> a measurement is.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 400 130" width="400" role="img" aria-label="A ruler measuring a block of length 4.37 centimetres">
+        <defs><pattern id="tk" width="6" height="10" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="9" class="ln" stroke-width="1"/></pattern></defs>
+        <rect x="20" y="20" width="262" height="28" rx="4" fill="#22d3ee" opacity=".35" stroke="#22d3ee"/>
+        <text x="151" y="39" text-anchor="middle" class="tx">block</text>
+        <line x1="282" y1="14" x2="282" y2="78" stroke="#fb7185" stroke-width="2" stroke-dasharray="4 3"/>
+        <rect x="20" y="60" width="360" height="30" rx="3" fill="none" class="ln" stroke-width="1.2"/>
+        <rect x="20" y="60" width="360" height="10" fill="url(#tk)"/>
+        <g class="tx2" text-anchor="middle"><text x="20" y="104">0</text><text x="80" y="104">1</text><text x="140" y="104">2</text><text x="200" y="104">3</text><text x="260" y="104">4</text><text x="320" y="104">5</text><text x="380" y="104">6 cm</text></g>
+        <text x="200" y="124" text-anchor="middle" class="tx">Reading = 4.37 cm → “4” and “3” are certain, “7” is estimated</text>
+      </svg>
+      <figcaption>The end of the block lies between 4.3 and 4.4 cm. We estimate the extra digit by eye, so 4.37 cm has <b>3 significant figures</b>.</figcaption>
+    </figure>
+    <h3>The 5 rules</h3>
+    <ol class="steps">
+      <li><b>All non-zero digits</b> are significant. (2.345 → 4)</li>
+      <li><b>Zeros between</b> non-zero digits are significant. (1005 → 4)</li>
+      <li><b>Leading zeros</b> are <i>not</i> significant — they only show the decimal place. (0.0025 → 2)</li>
+      <li><b>Trailing zeros without a decimal point</b> are not significant. (1500 → 2)</li>
+      <li><b>Trailing zeros after a decimal point</b> are significant. (2.50 → 3, 0.0250 → 3)</li>
+    </ol>
+    <div class="callout tip"><b>Scientific notation removes confusion.</b> 4.700 × 10^2 has 4 significant figures. The power of ten never counts. Also, changing units does not change significant figures: 2.308 cm = 0.02308 m (both 4).</div>
+    <h3>Try it yourself</h3>
+    <div class="tool">
+      <label for="sfIn"><b>Type a number</b> (e.g. 0.00450, 1005, 4500, 2.500e3):</label>
+      <input id="sfIn" type="text" inputmode="decimal" autocomplete="off" value="0.00450" aria-describedby="sfOut">
+      <div class="out" id="sfOut" aria-live="polite"></div>
+    </div>
+    <h3>Rounding off</h3>
+    <ul class="clean">
+      <li>Digit to drop is <b>less than 5</b> → keep the previous digit. (3.42 → 3.4)</li>
+      <li>Digit to drop is <b>more than 5</b> → add 1 to the previous digit. (3.46 → 3.5)</li>
+      <li>Digit is exactly <b>5</b> (nothing after it) → make the previous digit <b>even</b>. (3.45 → 3.4, 3.35 → 3.4)</li>
+    </ul>
+    <h3>Using significant figures in calculations</h3>
+    <div class="two">
+      <div class="mini"><h4>Add / subtract</h4><p>Answer keeps as many <b>decimal places</b> as the number with the <i>fewest</i> decimal places.<br>2.5 + 3.27 = 5.77 → <b>5.8</b></p></div>
+      <div class="mini"><h4>Multiply / divide</h4><p>Answer keeps as many <b>significant figures</b> as the number with the <i>fewest</i> significant figures.<br>4.5 × 2.30 = 10.35 → <b>10</b></p></div>
+    </div>
+    <p class="cap">Exact numbers (like the 2 in 2πr, or counting 5 students) have unlimited significant figures and never limit the answer.</p>
+  </article>
+
+  <!-- Topic 5 -->
+  <article class="topic" data-title="Dimensions &amp; Dimensional Formulae" data-desc="Writing any quantity using M, L, T." hidden>
+    <h2><span>5</span>Dimensions and Dimensional Formulae</h2>
+    <p>The <b>dimensions</b> of a physical quantity tell us <i>which base quantities</i> it is made of, and with what powers. We write base dimensions in square brackets:</p>
+    <div class="tw"><table>
+      <tr><th>Length</th><th>Mass</th><th>Time</th><th>Current</th><th>Temperature</th><th>Amount</th><th>Luminous int.</th></tr>
+      <tr><td>[L]</td><td>[M]</td><td>[T]</td><td>[A]</td><td>[K]</td><td>[mol]</td><td>[cd]</td></tr>
+    </table></div>
+    <p>The expression showing these powers is the <b>dimensional formula</b>, e.g. <b>[M^a L^b T^c]</b>.</p>
+    <h3>How to find it — 3 easy steps</h3>
+    <ol class="steps">
+      <li>Write the formula of the quantity.</li>
+      <li>Replace each quantity by its dimensions.</li>
+      <li>Simplify with exponent rules (dividing → negative power).</li>
+    </ol>
+    <div class="callout tip"><b>Example — Force:</b><br>Force = mass × acceleration<br>= [M] × [L T^-2]<br>= <b>[M L T^-2]</b>
+    </div>
+    <div class="two">
+      <div class="mini"><h4>Speed</h4><p>distance ÷ time = [L] ÷ [T] = <b>[L T^-1]</b></p></div>
+      <div class="mini"><h4>Work</h4><p>force × distance = [M L T^-2][L] = <b>[M L^2 T^-2]</b></p></div>
+    </div>
+    <h3>Dimensionless quantities</h3>
+    <p>Ratios of two similar quantities have no dimensions: angle, strain, refractive index, relative density, trigonometric ratios, and pure numbers like π. Their dimensional formula is [M^0 L^0 T^0].</p>
+    <div class="callout warn"><b>Remember:</b> Dimensions tell what a quantity is <i>made of</i>, not its size. Torque and work both have [M L^2 T^-2], yet they are different quantities.</div>
+  </article>
+
+  <!-- Topic 6 -->
+  <article class="topic" data-title="Dimensional Analysis" data-desc="Check equations, convert units, derive formulas." hidden>
+    <h2><span>6</span>Dimensional Analysis</h2>
+    <p>Dimensional analysis uses dimensions as a <b>quick checking tool</b>. It rests on one idea:</p>
+    <div class="callout"><b>Principle of Homogeneity:</b> In a correct equation, every term on both sides must have the <b>same dimensions</b>. You can only add or subtract quantities of the same kind (you cannot add metres to seconds).</div>
+    <h3>Use 1 — Check an equation</h3>
+    <p>Is v = u + at correct? Dimensions: [v] = [L T^-1], [u] = [L T^-1], [at] = [L T^-2][T] = [L T^-1]. All terms match ✔ — so it is dimensionally correct.</p>
+    <h3>Use 2 — Convert units</h3>
+    <div class="formula">n₂ = n₁ [M₁/M₂]^a [L₁/L₂]^b [T₁/T₂]^c</div>
+    <p>For a quantity with dimensions [M^a L^b T^c]. Example: 1 N = ? dyne. Force is [M L T^-2], so n₂ = 1 × (1000 g / 1 g)^1 × (100 cm / 1 cm)^1 = 10^5 dyne.</p>
+    <h3>Use 3 — Derive a relation</h3>
+    <p>Suppose the time period T of a pendulum depends on length l, mass m and gravity g. Write T ∝ l^a m^b g^c, match dimensions and solve. (Full steps are in <b>Solved Numericals</b>, problem 4.) The result: T = k √(l/g).</p>
+    <h3>Limitations</h3>
+    <ul class="clean">
+      <li>It cannot give <b>dimensionless constants</b> (like ½ or 2π).</li>
+      <li>It cannot handle sin, cos, log or exponential functions.</li>
+      <li>It does not say whether a quantity is a scalar or a vector.</li>
+      <li>It is hard to use when a quantity depends on more than three others.</li>
+      <li>A dimensionally correct equation may still be <b>physically wrong</b>. For example, K = mv² is dimensionally fine, but the true formula is K = ½mv².</li>
+    </ul>
+  </article>
+
+  <!-- Topic 7 -->
+  <article class="topic" data-title="Errors in Measurement" data-desc="Types of errors and how to calculate them." hidden>
+    <h2><span>7</span>Errors in Measurement</h2>
+    <p>No measurement is perfectly exact. The difference between the measured value and the true value is called the <b>error</b>.</p>
+    <h3>Types of errors</h3>
+    <div class="two">
+      <div class="mini"><h4>🔧 Systematic</h4><p>Always pushes the result the <b>same way</b>. Causes: faulty instrument (zero error), wrong method, personal habit. Fix: calibrate, correct the method.</p></div>
+      <div class="mini"><h4>🎲 Random</h4><p>Changes <b>unpredictably</b> up or down. Causes: small changes in surroundings, tiny differences in reading. Fix: take many readings and average.</p></div>
+      <div class="mini"><h4>⚠️ Gross</h4><p>Human <b>mistakes</b>: misreading the scale, writing wrong data. Fix: be careful and repeat.</p></div>
+    </div>
+    <div class="callout"><b>Least count</b> = the smallest value an instrument can measure (ruler 1 mm, vernier callipers usually 0.1 mm, screw gauge usually 0.01 mm). The <b>least count error</b> is the error due to this limit.</div>
+    <h3>Calculating errors from repeated readings</h3>
+    <p>Take readings a₁, a₂, … aₙ.</p>
+    <ol class="steps">
+      <li><b>Mean value</b> a_mean = (a₁ + a₂ + … + aₙ) ÷ n</li>
+      <li><b>Absolute error</b> of each reading: Δaᵢ = |a_mean − aᵢ|</li>
+      <li><b>Mean absolute error</b> Δa_mean = (Δa₁ + Δa₂ + … + Δaₙ) ÷ n</li>
+      <li><b>Relative error</b> = Δa_mean ÷ a_mean</li>
+      <li><b>Percentage error</b> = relative error × 100 %</li>
+    </ol>
+    <p>The result is written as <b>a = a_mean ± Δa_mean</b>.</p>
+    <h3>Combining errors</h3>
+    <div class="tw"><table>
+      <tr><th>Calculation</th><th>Error rule</th></tr>
+      <tr><td>Z = A + B or Z = A − B</td><td>ΔZ = ΔA + ΔB (<b>absolute</b> errors add)</td></tr>
+      <tr><td>Z = A × B or Z = A ÷ B</td><td>ΔZ/Z = ΔA/A + ΔB/B (<b>relative</b> errors add)</td></tr>
+      <tr><td>Z = A^n</td><td>ΔZ/Z = n × ΔA/A</td></tr>
+      <tr><td>Z = A^p B^q ÷ C^r</td><td>ΔZ/Z = p ΔA/A + q ΔB/B + r ΔC/C</td></tr>
+    </table></div>
+    <div class="callout warn"><b>Never subtract errors.</b> Even for Z = A − B, the errors <i>add</i> — in the worst case both errors push in opposite directions.</div>
+  </article>
+
+  <!-- Topic 8 -->
+  <article class="topic" data-title="Accuracy &amp; Precision" data-desc="Close to truth vs. close to each other." hidden>
+    <h2><span>8</span>Accuracy and Precision</h2>
+    <div class="two">
+      <div class="mini"><h4>🎯 Accuracy</h4><p>How close a measurement is to the <b>true value</b>.</p></div>
+      <div class="mini"><h4>📍 Precision</h4><p>How close repeated measurements are <b>to each other</b> (how fine the instrument is).</p></div>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 440 160" width="440" role="img" aria-label="Four targets showing accurate and precise, precise but not accurate, accurate but not precise, and neither">
+        <g fill="none" class="ln" stroke-width="1.3">
+          <g id="tg"><circle cx="55" cy="58" r="46"/><circle cx="55" cy="58" r="30"/><circle cx="55" cy="58" r="14"/></g>
+          <use href="#tg" x="110"/><use href="#tg" x="220"/><use href="#tg" x="330"/>
+        </g>
+        <g fill="#fb7185">
+          <circle cx="52" cy="56" r="3.5"/><circle cx="58" cy="61" r="3.5"/><circle cx="56" cy="54" r="3.5"/><circle cx="51" cy="62" r="3.5"/>
+          <circle cx="190" cy="36" r="3.5"/><circle cx="194" cy="41" r="3.5"/><circle cx="187" cy="40" r="3.5"/><circle cx="192" cy="33" r="3.5"/>
+          <circle cx="250" cy="42" r="3.5"/><circle cx="300" cy="72" r="3.5"/><circle cx="268" cy="86" r="3.5"/><circle cx="294" cy="38" r="3.5"/>
+          <circle cx="408" cy="30" r="3.5"/><circle cx="366" cy="88" r="3.5"/><circle cx="414" cy="82" r="3.5"/><circle cx="372" cy="28" r="3.5"/>
+        </g>
+        <g class="tx" text-anchor="middle"><text x="55" y="128">Accurate</text><text x="55" y="144">&amp; precise</text>
+          <text x="165" y="128">Precise,</text><text x="165" y="144">not accurate</text>
+          <text x="275" y="128">Accurate,</text><text x="275" y="144">not precise</text>
+          <text x="385" y="128">Neither</text><text x="385" y="144">accurate nor precise</text></g>
+      </svg>
+      <figcaption>The bullseye is the true value; red dots are your measurements.</figcaption>
+    </figure>
+    <h3>Example: a weighing machine</h3>
+    <p>True mass = 50.0 g.</p>
+    <ul class="clean">
+      <li>Readings 52.1, 52.0, 52.2 g → very close to each other (<b>precise</b>) but far from 50.0 (<b>not accurate</b>). Likely a zero error.</li>
+      <li>Readings 49.8, 50.3, 50.1 g → close to 50.0 (<b>accurate</b>) and fairly close to each other.</li>
+    </ul>
+    <div class="tw"><table>
+      <tr><th></th><th>Accuracy</th><th>Precision</th></tr>
+      <tr><td>Compares with</td><td>True value</td><td>Other readings</td></tr>
+      <tr><td>Improved by</td><td>Calibrating the instrument</td><td>Finer instrument, careful repeated readings</td></tr>
+      <tr><td>Linked to</td><td>Systematic error</td><td>Random error and least count</td></tr>
+    </table></div>
+    <div class="callout tip"><b>Memory trick:</b> <b>Accurate = Aimed at the truth.</b> <b>Precise = Repeatable.</b></div>
+  </article>
+
+  <div class="tabnav">
+    <button class="btn ghost" id="prevT" type="button">← Previous</button>
+    <button class="btn" id="doneT" type="button">Mark as complete</button>
+    <button class="btn ghost" id="nextT" type="button">Next →</button>
+  </div>
+</section>
+
+<!-- ================= FORMULAS ================= -->
+<section class="panel" id="p-formulas" hidden>
+  <h2>∑ Formula Section</h2>
+  <p>Tap through the key formulas, each with a short explanation and example.</p>
+
+  <div class="fcard"><h4>Physical quantity</h4><div class="formula">Q = n × u</div><p>n is the number, u is the unit. If the unit becomes bigger, n becomes smaller: <b>n₁u₁ = n₂u₂</b>.</p><p><b>Example:</b> 2 m = 200 cm, since 2 × 1 m = 200 × 1 cm.</p></div>
+
+  <div class="fcard"><h4>Unit conversion by dimensions</h4><div class="formula">n₂ = n₁ [M₁/M₂]^a [L₁/L₂]^b [T₁/T₂]^c</div><p>Use it when the quantity has dimensions [M^a L^b T^c].</p><p><b>Example:</b> 1 J = 10^7 erg (work is [M L^2 T^-2]: 1000 × 100^2 = 10^7).</p></div>
+
+  <div class="fcard"><h4>Significant figures in calculations</h4><div class="formula">Add / subtract → fewest <i>decimal places</i><br>Multiply / divide → fewest <i>significant figures</i></div><p><b>Example:</b> 12.11 + 18.0 + 1.012 = 31.122 → <b>31.1</b>.</p></div>
+
+  <div class="fcard"><h4>Mean and absolute error</h4><div class="formula">a_mean = Σaᵢ / n &nbsp;&nbsp; Δaᵢ = |a_mean − aᵢ| &nbsp;&nbsp; Δa_mean = ΣΔaᵢ / n</div><p>Average of readings, how far each reading is from it, and the average of those gaps.</p></div>
+
+  <div class="fcard"><h4>Relative and percentage error</h4><div class="formula">Relative error = Δa_mean / a_mean &nbsp;&nbsp; % error = (Δa_mean / a_mean) × 100</div><p><b>Example:</b> a = 50 cm, Δa = 1 cm → relative error 0.02, percentage error 2%.</p></div>
+
+  <div class="fcard"><h4>Combination of errors</h4><div class="formula">Z = A ± B → ΔZ = ΔA + ΔB<br>Z = A × B or A / B → ΔZ/Z = ΔA/A + ΔB/B<br>Z = A^n → ΔZ/Z = n·ΔA/A</div><p><b>Example:</b> Volume of a cube V = a^3. If a has 2% error, V has 3 × 2 = <b>6%</b> error.</p></div>
+
+  <div class="fcard"><h4>Least count</h4><div class="formula">Vernier: LC = 1 MSD − 1 VSD<br>Screw gauge: LC = pitch ÷ number of circular scale divisions</div><p><b>Example:</b> pitch 1 mm, 100 divisions → LC = 0.01 mm.</p></div>
+
+  <div class="fcard"><h4>Principle of homogeneity</h4><div class="formula">[LHS] = [RHS]</div><p>Each term of a correct equation has the same dimensions.</p><p><b>Example:</b> s = ut + ½at^2 → every term is [L] ✔.</p></div>
+
+  <h3>Dimensional formulae of common quantities</h3>
+  <div class="tw"><table>
+    <tr><th>Quantity</th><th>Formula</th><th>SI unit</th><th>Dimensional formula</th></tr>
+    <tr><td>Area</td><td>l × b</td><td>m^2</td><td>[L^2]</td></tr>
+    <tr><td>Volume</td><td>l × b × h</td><td>m^3</td><td>[L^3]</td></tr>
+    <tr><td>Speed / velocity</td><td>d / t</td><td>m s^-1</td><td>[L T^-1]</td></tr>
+    <tr><td>Acceleration</td><td>v / t</td><td>m s^-2</td><td>[L T^-2]</td></tr>
+    <tr><td>Density</td><td>m / V</td><td>kg m^-3</td><td>[M L^-3]</td></tr>
+    <tr><td>Force</td><td>m × a</td><td>N</td><td>[M L T^-2]</td></tr>
+    <tr><td>Momentum</td><td>m × v</td><td>kg m s^-1</td><td>[M L T^-1]</td></tr>
+    <tr><td>Impulse</td><td>F × t</td><td>N s</td><td>[M L T^-1]</td></tr>
+    <tr><td>Work, energy</td><td>F × d</td><td>J</td><td>[M L^2 T^-2]</td></tr>
+    <tr><td>Torque</td><td>F × r</td><td>N m</td><td>[M L^2 T^-2]</td></tr>
+    <tr><td>Power</td><td>W / t</td><td>W</td><td>[M L^2 T^-3]</td></tr>
+    <tr><td>Pressure, stress</td><td>F / A</td><td>Pa</td><td>[M L^-1 T^-2]</td></tr>
+    <tr><td>Frequency</td><td>1 / T</td><td>Hz</td><td>[T^-1]</td></tr>
+    <tr><td>Angular velocity</td><td>θ / t</td><td>rad s^-1</td><td>[T^-1]</td></tr>
+    <tr><td>Surface tension</td><td>F / l</td><td>N m^-1</td><td>[M T^-2]</td></tr>
+    <tr><td>Coefficient of viscosity</td><td>F d / (A v)</td><td>Pa s</td><td>[M L^-1 T^-1]</td></tr>
+    <tr><td>Gravitational constant G</td><td>F r² / (m₁m₂)</td><td>N m^2 kg^-2</td><td>[M^-1 L^3 T^-2]</td></tr>
+    <tr><td>Planck’s constant h</td><td>E / ν</td><td>J s</td><td>[M L^2 T^-1]</td></tr>
+    <tr><td>Specific heat</td><td>Q / (m ΔT)</td><td>J kg^-1 K^-1</td><td>[L^2 T^-2 K^-1]</td></tr>
+    <tr><td>Electric charge</td><td>I × t</td><td>C</td><td>[A T]</td></tr>
+    <tr><td>Strain, angle, refractive index</td><td>ratio</td><td>none</td><td>[M^0 L^0 T^0]</td></tr>
+  </table></div>
+  <div class="callout tip"><b>Same dimensions, different quantities:</b> work, energy and torque; momentum and impulse; frequency and angular velocity.</div>
+</section>
+
+<!-- ================= NUMERICALS ================= -->
+<section class="panel" id="p-numericals" hidden>
+  <h2>✏️ Solved Numericals</h2>
+  <p>Try each problem yourself first, then open the solution.</p>
+
+  <details class="num"><summary><span><b>1.</b> Convert 72 km/h into m/s.</span></summary><div class="dbody">
+    <ol class="steps"><li>1 km = 1000 m and 1 hour = 3600 s.</li><li>72 km/h = 72 × 1000 m ÷ 3600 s.</li><li>= 72000 ÷ 3600 = 20.</li></ol><div class="ans">72 km/h = 20 m s^-1</div>
+    <div class="callout tip"><b>Shortcut:</b> km/h → m/s: multiply by 5/18.</div></div></details>
+
+  <details class="num"><summary><span><b>2.</b> Find the dimensional formula of pressure.</span></summary><div class="dbody">
+    <ol class="steps"><li>Pressure = Force ÷ Area.</li><li>[Force] = [M L T^-2], [Area] = [L^2].</li><li>[Pressure] = [M L T^-2] ÷ [L^2] = [M L^(1−2) T^-2].</li></ol><div class="ans">[Pressure] = [M L^-1 T^-2]</div></div></details>
+
+  <details class="num"><summary><span><b>3.</b> Check whether s = ut + ½at² is dimensionally correct.</span></summary><div class="dbody">
+    <ol class="steps"><li>LHS: [s] = [L].</li><li>First term: [ut] = [L T^-1][T] = [L].</li><li>Second term: [½at²] = [L T^-2][T^2] = [L]. (The ½ has no dimensions.)</li><li>Every term is [L].</li></ol><div class="ans">Yes — dimensionally correct.</div></div></details>
+
+  <details class="num"><summary><span><b>4.</b> Derive the time period of a simple pendulum using dimensions.</span></summary><div class="dbody">
+    <ol class="steps">
+      <li>Assume T depends on length l, mass m and gravity g: <b>T = k l^a m^b g^c</b> (k is a constant).</li>
+      <li>Dimensions: [T] = [L]^a [M]^b [L T^-2]^c = [M^b L^(a+c) T^(−2c)].</li>
+      <li>Compare with [T] = [M^0 L^0 T^1]:<br>Mass: b = 0<br>Length: a + c = 0<br>Time: −2c = 1 → c = −½</li>
+      <li>Then a = −c = +½.</li>
+      <li>So T = k l^½ g^-½.</li></ol><div class="ans">T = k √(l/g) (experiment shows k = 2π). Mass does not matter.</div></div></details>
+
+  <details class="num"><summary><span><b>5.</b> Using significant figures: (a) 12.11 + 18.0 + 1.012 (b) 4.5 cm × 2.30 cm</span></summary><div class="dbody">
+    <p><b>(a) Addition</b></p>
+    <ol class="steps"><li>Add: 12.11 + 18.0 + 1.012 = 31.122.</li><li>Decimal places: 2, 1, 3. The fewest is 1 (from 18.0).</li><li>Round 31.122 to 1 decimal place → 31.1.</li></ol>
+    <p><b>(b) Multiplication</b></p>
+    <ol class="steps"><li>4.5 × 2.30 = 10.35.</li><li>Significant figures: 4.5 has 2, 2.30 has 3. The fewest is 2.</li><li>Round 10.35 to 2 significant figures → 10 (written as 1.0 × 10^1).</li></ol>
+    <div class="ans">(a) 31.1 &nbsp;&nbsp; (b) 10 cm²</div></div></details>
+
+  <details class="num"><summary><span><b>6.</b> A stopwatch gives these times for 20 oscillations: 2.63, 2.56, 2.42, 2.71, 2.80 s. Find the mean absolute error and percentage error.</span></summary><div class="dbody">
+    <ol class="steps">
+      <li>Mean = (2.63 + 2.56 + 2.42 + 2.71 + 2.80) ÷ 5 = 13.12 ÷ 5 = 2.624 ≈ 2.62 s.</li>
+      <li>Absolute errors: 0.01, 0.06, 0.20, 0.09, 0.18.</li>
+      <li>Mean absolute error = (0.01 + 0.06 + 0.20 + 0.09 + 0.18) ÷ 5 = 0.54 ÷ 5 = 0.108 ≈ 0.11 s.</li>
+      <li>Relative error = 0.11 ÷ 2.62 ≈ 0.042.</li>
+      <li>Percentage error = 0.042 × 100 ≈ 4.2%.</li></ol><div class="ans">t = 2.62 ± 0.11 s, percentage error ≈ 4%</div></div></details>
+
+  <details class="num"><summary><span><b>7.</b> Length l = 10.0 ± 0.1 cm and breadth b = 5.0 ± 0.1 cm. Find the area with its error.</span></summary><div class="dbody">
+    <ol class="steps">
+      <li>Area A = l × b = 10.0 × 5.0 = 50 cm².</li>
+      <li>For a product, relative errors add:<br>ΔA/A = Δl/l + Δb/b = 0.1/10.0 + 0.1/5.0 = 0.01 + 0.02 = 0.03.</li>
+      <li>ΔA = 0.03 × 50 = 1.5 cm².</li></ol><div class="ans">A = 50 ± 1.5 cm² (3% error)</div></div></details>
+
+  <details class="num"><summary><span><b>8.</b> The side of a cube is measured as 2.0 ± 0.1 cm. Find the percentage error in its volume.</span></summary><div class="dbody">
+    <ol class="steps">
+      <li>V = a^3, so ΔV/V = 3 × Δa/a.</li>
+      <li>Δa/a = 0.1/2.0 = 0.05 = 5%.</li>
+      <li>ΔV/V = 3 × 5% = 15%.</li>
+      <li>V = 2.0^3 = 8.0 cm^3, so ΔV = 0.15 × 8.0 = 1.2 cm^3.</li></ol><div class="ans">Error in volume = 15% (V = 8.0 ± 1.2 cm³)</div></div></details>
+</section>
+
+<!-- ================= PRACTICE ================= -->
+<section class="panel" id="p-practice" hidden>
+  <h2>🎯 Practice Zone</h2>
+  <p>16 MCQs. Choose an option to see instantly whether you are right. <span id="bestTxt" class="cap"></span></p>
+  <div class="card" id="quiz" aria-live="polite"></div>
+</section>
+
+<!-- ================= NOTES ================= -->
+<section class="panel" id="p-notes" hidden>
+  <h2>📝 Revision Notes</h2>
+  <p>Tap a topic to open its notes.</p>
+  <details><summary>1. Physical quantities</summary><div class="dbody"><ul class="clean">
+    <li>Physical quantity = anything measurable.</li><li>Measurement = number × unit.</li><li>Bigger unit → smaller number (n₁u₁ = n₂u₂).</li><li>Scalar: magnitude only. Vector: magnitude + direction.</li></ul></div></details>
+  <details><summary>2. Fundamental and derived units</summary><div class="dbody"><ul class="clean">
+    <li>7 base quantities: length, mass, time, current, temperature, amount of substance, luminous intensity.</li><li>Derived quantities come from combining base ones (speed, force, density…).</li><li>Radian and steradian are dimensionless derived units.</li></ul></div></details>
+  <details><summary>3. SI system</summary><div class="dbody"><ul class="clean">
+    <li>SI base units: m, kg, s, A, K, mol, cd.</li><li>Prefixes: kilo 10^3, mega 10^6, giga 10^9, milli 10^-3, micro 10^-6, nano 10^-9, pico 10^-12.</li><li>1 light year = 9.46 × 10^15 m; 1 Å = 10^-10 m; 1 u = 1.66 × 10^-27 kg.</li></ul></div></details>
+  <details><summary>4. Significant figures</summary><div class="dbody"><ul class="clean">
+    <li>Non-zero digits and zeros between them count.</li><li>Leading zeros never count.</li><li>Trailing zeros count only after a decimal point.</li><li>Add/subtract → decimal places. Multiply/divide → significant figures.</li><li>Exact numbers have unlimited significant figures.</li></ul></div></details>
+  <details><summary>5. Dimensions</summary><div class="dbody"><ul class="clean">
+    <li>Dimensions = powers of base quantities, written [M^a L^b T^c].</li><li>Force [M L T^-2], work [M L^2 T^-2], pressure [M L^-1 T^-2].</li><li>Ratios, angles and pure numbers are dimensionless.</li></ul></div></details>
+  <details><summary>6. Dimensional analysis</summary><div class="dbody"><ul class="clean">
+    <li>Principle of homogeneity: all terms have equal dimensions.</li><li>Uses: check equations, convert units, derive relations.</li><li>Limits: no constants like ½ or 2π, no trig/log/exp, correct dimensions ≠ correct physics.</li></ul></div></details>
+  <details><summary>7. Errors</summary><div class="dbody"><ul class="clean">
+    <li>Types: systematic, random, gross.</li><li>Absolute error = |mean − reading|. Relative = Δa/a. Percentage = relative × 100.</li><li>Sum/difference: add absolute errors. Product/quotient: add relative errors. Power n: multiply relative error by n.</li></ul></div></details>
+  <details><summary>8. Accuracy and precision</summary><div class="dbody"><ul class="clean">
+    <li>Accuracy: closeness to true value. Precision: closeness of readings to each other.</li><li>Precise does not mean accurate.</li></ul></div></details>
+
+  <div class="sec-title"><h2 style="margin:0">⚡ Quick revision sheet</h2></div>
+  <div class="card">
+    <ul class="clean">
+      <li><b>SI base units:</b> metre, kilogram, second, ampere, kelvin, mole, candela.</li>
+      <li><b>Significant figures:</b> 1005 → 4 · 0.0025 → 2 · 2.50 → 3 · 1500 → 2.</li>
+      <li><b>Key dimensions:</b> force [M L T^-2] · energy [M L^2 T^-2] · power [M L^2 T^-3] · pressure [M L^-1 T^-2] · momentum [M L T^-1].</li>
+      <li><b>Error rules:</b> A ± B → add absolute errors · A × B, A / B → add relative errors · A^n → n × relative error.</li>
+      <li><b>Pendulum:</b> T = 2π √(l/g).</li>
+      <li><b>Conversions:</b> 1 N = 10^5 dyne · 1 J = 10^7 erg · km/h → m/s: × 5/18.</li>
+      <li><b>Exam tip:</b> Always write units, and give final answers with the correct number of significant figures.</li>
+    </ul>
+  </div>
+</section>
+
+</div></main>
+
+<footer>
+  <a href="study.html">← Back to Study Dashboard</a> · <a href="index.html">Sciora Home</a><br>
+  © 2026 Sciora · Learn. Understand. Grow.
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* superscript helper: 10^-3 -> 10<sup>−3</sup> */
+  function fmt(s) {
+    return s.replace(/\^(?:\(([^)]*)\)|([−-]?(?:\d+(?:\.\d+)?|[a-z½])))/g, function (m, p, n) {
+      return "<sup>" + (p || n).replace(/-/g, "−") + "</sup>";
+    });
+  }
+  var main = $("#main");
+  main.innerHTML = fmt(main.innerHTML);
+
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+
+  /* ---------- Theme (shared key with the rest of Sciora) ---------- */
+  var themeBtn = $("#themeBtn"), THEME_KEY = "sciora-theme";
+  function applyTheme(t) {
+    document.documentElement.setAttribute("data-theme", t);
+    var light = t === "light";
+    themeBtn.textContent = light ? "☀️" : "🌙";
+    themeBtn.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+    var m = $('meta[name="theme-color"]'); if (m) m.setAttribute("content", light ? "#f7f9fd" : "#070b14");
+  }
+  var savedTheme = store.get(THEME_KEY);
+  applyTheme(savedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+  themeBtn.addEventListener("click", function () {
+    var n = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+    applyTheme(n); store.set(THEME_KEY, n);
+  });
+
+  /* ---------- Tabs & topics ---------- */
+  var TABS = ["overview", "learn", "formulas", "numericals", "practice", "notes"];
+  var topics = $$(".topic"), cur = 0, curTab = "overview";
+  var DONE_KEY = "sciora-phy11-ch1-done", done = [];
+  try { done = JSON.parse(store.get(DONE_KEY) || "[]").filter(function (i) { return i >= 0 && i < topics.length; }); } catch (e) { done = []; }
+
+  var pills = $("#pills"), grid = $("#topicGrid");
+  topics.forEach(function (t, i) {
+    var p = document.createElement("button");
+    p.type = "button"; p.className = "pill"; p.innerHTML = (i + 1) + ". " + t.getAttribute("data-title");
+    p.addEventListener("click", function () { openTopic(i); });
+    pills.appendChild(p);
+    var c = document.createElement("button");
+    c.type = "button"; c.className = "tcard";
+    c.innerHTML = '<div class="n"><span>Topic ' + (i + 1) + '</span><span class="st"></span></div><h4>' + t.getAttribute("data-title") + "</h4><p>" + t.getAttribute("data-desc") + "</p>";
+    c.addEventListener("click", function () { openTopic(i); });
+    grid.appendChild(c);
+  });
+
+  function setHash(h) { try { history.replaceState(null, "", "#" + h); } catch (e) {} }
+
+  function showTab(name, keepHash) {
+    if (TABS.indexOf(name) < 0) name = "overview";
+    curTab = name;
+    TABS.forEach(function (t) { $("#p-" + t).hidden = t !== name; });
+    $$(".tab").forEach(function (b) {
+      var on = b.getAttribute("data-tab") === name;
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      if (on) b.scrollIntoView({ inline: "center", block: "nearest" });
+    });
+    if (name === "learn") renderTopic();
+    else if (!keepHash) setHash(name);
+    window.scrollTo(0, 0);
+  }
+  function openTopic(i) {
+    cur = Math.max(0, Math.min(topics.length - 1, i));
+    showTab("learn", true);
+    setHash("learn-" + (cur + 1));
+  }
+  function renderTopic() {
+    topics.forEach(function (t, i) { t.hidden = i !== cur; });
+    $$(".pill").forEach(function (p, i) {
+      p.classList.toggle("on", i === cur);
+      if (i === cur) p.scrollIntoView({ inline: "center", block: "nearest" });
+    });
+    $("#prevT").disabled = cur === 0;
+    $("#nextT").textContent = cur === topics.length - 1 ? "Formulas →" : "Next →";
+    renderProgress();
+  }
+  function renderProgress() {
+    var n = done.length, tot = topics.length, pct = Math.round(n / tot * 100);
+    $("#pbar").style.width = pct + "%";
+    $("#pbarWrap").setAttribute("aria-valuenow", pct);
+    $("#progText").textContent = n + " of " + tot + " topics completed" + (n === tot ? " 🎉" : "");
+    $$(".pill").forEach(function (p, i) { p.classList.toggle("ok", done.indexOf(i) > -1); });
+    $$("#topicGrid .tcard").forEach(function (c, i) {
+      var d = done.indexOf(i) > -1;
+      c.classList.toggle("done", d);
+      c.querySelector(".st").textContent = d ? "✓ Completed" : "○ Not started";
+    });
+    var b = $("#doneT"), isDone = done.indexOf(cur) > -1;
+    b.textContent = isDone ? "✓ Completed (tap to undo)" : "Mark as complete";
+    b.classList.toggle("done", isDone);
+  }
+  function saveDone() { store.set(DONE_KEY, JSON.stringify(done)); renderProgress(); }
+
+  $$(".tab").forEach(function (b) { b.addEventListener("click", function () { showTab(b.getAttribute("data-tab")); }); });
+  $$("[data-tab-go]").forEach(function (b) { b.addEventListener("click", function () { showTab(b.getAttribute("data-tab-go")); }); });
+  $$("[data-open]").forEach(function (b) { b.addEventListener("click", function () { openTopic(+b.getAttribute("data-open")); }); });
+  $("#prevT").addEventListener("click", function () { openTopic(cur - 1); });
+  $("#nextT").addEventListener("click", function () {
+    if (cur === topics.length - 1) showTab("formulas"); else openTopic(cur + 1);
+  });
+  $("#doneT").addEventListener("click", function () {
+    var k = done.indexOf(cur);
+    if (k > -1) done.splice(k, 1); else done.push(cur);
+    saveDone();
+  });
+  $("#resetBtn").addEventListener("click", function () {
+    if (window.confirm("Reset your topic progress for this chapter?")) { done = []; saveDone(); }
+  });
+
+  function routeFromHash() {
+    var m = /^#(overview|learn|formulas|numericals|practice|notes)(?:-(\d+))?$/.exec(location.hash);
+    if (!m) { showTab("overview", true); return; }
+    if (m[1] === "learn") { cur = Math.max(0, Math.min(topics.length - 1, (+m[2] || 1) - 1)); }
+    showTab(m[1], true);
+  }
+  window.addEventListener("hashchange", routeFromHash);
+
+  /* ---------- Significant figure counter ---------- */
+  function analyze(str) {
+    str = str.trim();
+    var m = /^[+-]?(\d+\.?\d*|\.\d+)(?:[eE]([+-]?\d+))?$/.exec(str);
+    if (!m) return null;
+    var mant = m[1], hasDot = mant.indexOf(".") > -1;
+    var chars = mant.split(""), idx = [];
+    chars.forEach(function (c, i) { if (c !== ".") idx.push(i); });
+    var first = -1, last = -1;
+    idx.forEach(function (i) { if (chars[i] !== "0") { if (first < 0) first = i; last = i; } });
+    var s, e;
+    if (first < 0) { s = e = idx[idx.length - 1]; }       /* all zeros */
+    else { s = first; e = hasDot ? idx[idx.length - 1] : last; }
+    var count = 0, html = "";
+    if (str[0] === "+" || str[0] === "-") html += '<span class="ns">' + str[0] + "</span>";
+    chars.forEach(function (c, i) {
+      if (c === ".") { html += '<span class="' + (i > s && i < e ? "sg" : "ns") + '">.</span>'; return; }
+      var sig = i >= s && i <= e; if (sig) count++;
+      html += '<span class="' + (sig ? "sg" : "ns") + '">' + c + "</span>";
+    });
+    if (m[2] !== undefined) html += '<span class="ns"> × 10<sup>' + m[2].replace("-", "−") + "</sup></span>";
+    return { count: count, html: html, ambiguous: !hasDot && last < idx[idx.length - 1] && first >= 0 };
+  }
+  var sfIn = $("#sfIn"), sfOut = $("#sfOut");
+  function runSf() {
+    var r = analyze(sfIn.value);
+    if (!sfIn.value.trim()) { sfOut.innerHTML = '<div class="res">Type a number above.</div>'; return; }
+    if (!r) { sfOut.innerHTML = '<div class="res">Please enter a valid number, such as 0.0250 or 3.40e5.</div>'; return; }
+    sfOut.innerHTML = r.html + '<div class="res"><b>' + r.count + " significant figure" + (r.count === 1 ? "" : "s") + "</b> (highlighted)." +
+      (r.ambiguous ? " Trailing zeros without a decimal point are not counted. Write in scientific notation to be clear." : "") + "</div>";
+  }
+  sfIn.addEventListener("input", runSf); runSf();
+
+  /* ---------- Quiz ---------- */
+  var Q = [
+    { q: "Which of the following is a fundamental (base) quantity?", o: ["Force", "Velocity", "Mass", "Energy"], a: 2, e: "Mass is one of the 7 base quantities. Force, velocity and energy are derived." },
+    { q: "The SI unit of luminous intensity is:", o: ["Lumen", "Candela", "Lux", "Watt"], a: 1, e: "The candela (cd) is the SI base unit of luminous intensity." },
+    { q: "The dimensional formula of work is:", o: ["[M L T^-2]", "[M L^2 T^-3]", "[M L^2 T^-2]", "[M L^-1 T^-2]"], a: 2, e: "Work = force × distance = [M L T^-2][L] = [M L^2 T^-2]." },
+    { q: "How many significant figures are in 0.00340?", o: ["5", "3", "2", "6"], a: 1, e: "Leading zeros don’t count. 3, 4 and the trailing 0 (after the decimal point) count → 3." },
+    { q: "Which pair has the same dimensions?", o: ["Force and pressure", "Speed and acceleration", "Power and force", "Work and energy"], a: 3, e: "Work and energy both have the dimensions [M L^2 T^-2]." },
+    { q: "3.456 rounded off to 3 significant figures is:", o: ["3.45", "3.50", "3.46", "3.4"], a: 2, e: "The dropped digit 6 is more than 5, so 3.45 becomes 3.46." },
+    { q: "The dimensional formula of pressure is:", o: ["[M L^-1 T^-2]", "[M L T^-2]", "[M L^2 T^-2]", "[M L^-2 T^-2]"], a: 0, e: "Pressure = force ÷ area = [M L T^-2] ÷ [L^2] = [M L^-1 T^-2]." },
+    { q: "The principle of homogeneity states that:", o: ["Both sides of an equation must have equal numerical values", "Every term of a correct equation has the same dimensions", "All quantities must be in SI units", "Dimensions can be added to each other"], a: 1, e: "Only quantities with the same dimensions can be added, subtracted or equated." },
+    { q: "Error caused by a faulty zero of an instrument is a:", o: ["Random error", "Gross error", "Systematic error", "Relative error"], a: 2, e: "A zero error shifts every reading the same way — a systematic error." },
+    { q: "Which of these is dimensionless?", o: ["Angular velocity", "Strain", "Surface tension", "Frequency"], a: 1, e: "Strain is a ratio of two lengths, so it has no dimensions." },
+    { q: "Accuracy of a measurement means:", o: ["Closeness of readings to each other", "Number of digits in the reading", "Closeness of the reading to the true value", "Smallest value an instrument can read"], a: 2, e: "Accuracy compares the measurement with the true value. Closeness of readings to each other is precision." },
+    { q: "If x has a 3% error, the percentage error in x^2 is:", o: ["1.5%", "3%", "9%", "6%"], a: 3, e: "For Z = A^n, relative error = n × relative error of A. So 2 × 3% = 6%." },
+    { q: "Dimensional analysis cannot determine:", o: ["Whether an equation is dimensionally correct", "Dimensionless constants such as ½ or 2π", "Conversion between unit systems", "Dimensions of a derived quantity"], a: 1, e: "Constants without dimensions are invisible to dimensional analysis." },
+    { q: "The dimensional formula of Planck’s constant (E = hν) is:", o: ["[M L^2 T^-1]", "[M L T^-1]", "[M L^2 T^-2]", "[M L^2 T^-3]"], a: 0, e: "h = E ÷ ν = [M L^2 T^-2] ÷ [T^-1] = [M L^2 T^-1]." },
+    { q: "2.5 + 3.27 expressed with the correct significant figures is:", o: ["5.77", "5.7", "6", "5.8"], a: 3, e: "2.5 has the fewest decimal places (1), so round 5.77 to one decimal place → 5.8." }
+  ];
+  Q.push({ q: "A screw gauge has pitch 1 mm and 100 circular scale divisions. Its least count is:", o: ["1 mm", "0.1 mm", "0.01 mm", "0.001 mm"], a: 2, e: "Least count = pitch ÷ divisions = 1 mm ÷ 100 = 0.01 mm." });
+
+  var quiz = $("#quiz"), order = [], qi = 0, score = 0, locked = false, BEST_KEY = "sciora-phy11-ch1-best";
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function showBest() { var b = store.get(BEST_KEY); $("#bestTxt").textContent = b ? "Best score: " + b + "/" + Q.length : ""; }
+  function startQuiz() { order = shuffle(Q.map(function (_, i) { return i; })); qi = 0; score = 0; renderQ(); showBest(); }
+  function renderQ() {
+    locked = false;
+    var item = Q[order[qi]], L = ["A", "B", "C", "D"];
+    var h = '<div class="qtop"><span>Question ' + (qi + 1) + " of " + Q.length + "</span><span>Score: " + score + "</span></div>" +
+      '<div class="qbar"><i style="width:' + (qi / Q.length * 100) + '%"></i></div>' +
+      '<div class="qtext">' + fmt(item.q) + '</div><div class="opts">';
+    item.o.forEach(function (o, i) { h += '<button type="button" class="opt" data-i="' + i + '"><span class="l">' + L[i] + "</span><span>" + fmt(o) + "</span></button>"; });
+    h += '</div><div id="qfb"></div><div class="row" style="margin-top:16px;justify-content:flex-end"><button class="btn" id="qnext" type="button" hidden>' + (qi === Q.length - 1 ? "See my score" : "Next question →") + "</button></div>";
+    quiz.innerHTML = h;
+    $$(".opt", quiz).forEach(function (b) { b.addEventListener("click", function () { answer(+b.getAttribute("data-i")); }); });
+    $("#qnext").addEventListener("click", function () { qi++; if (qi < Q.length) renderQ(); else finish(); });
+  }
+  function answer(i) {
+    if (locked) return; locked = true;
+    var item = Q[order[qi]], ok = i === item.a, btns = $$(".opt", quiz);
+    btns.forEach(function (b, k) { b.disabled = true; if (k === item.a) b.classList.add("right"); });
+    if (!ok) btns[i].classList.add("wrong"); else score++;
+    $("#qfb").innerHTML = '<div class="fb ' + (ok ? "ok" : "no") + '"><b>' + (ok ? "✅ Correct!" : "❌ Not quite.") + "</b> " + fmt(item.e) + "</div>";
+    $("#qnext").hidden = false; $("#qnext").focus();
+  }
+  function finish() {
+    var pct = Math.round(score / Q.length * 100);
+    var best = +store.get(BEST_KEY) || 0; if (score > best) { store.set(BEST_KEY, String(score)); }
+    var msg = pct >= 80 ? "Excellent! You have a strong grip on this chapter. 🌟" : pct >= 50 ? "Good effort! Revise the weak topics and try again. 💪" : "Keep going — read the topics and notes, then retry. 📖";
+    quiz.innerHTML = '<div class="score"><div class="eyebrow">Final score</div><div class="big">' + score + " / " + Q.length + '</div><div>' + pct + '%</div><p class="msg">' + msg + '</p><div class="row" style="justify-content:center"><button class="btn" id="retry" type="button">Try again</button><button class="btn ghost" id="toNotes" type="button">Review notes</button></div></div>';
+    $("#retry").addEventListener("click", startQuiz);
+    $("#toNotes").addEventListener("click", function () { showTab("notes"); });
+    showBest();
+  }
+  startQuiz();
+
+  routeFromHash();
+  renderProgress();
+})();
+</script>
+</body>
+</html>

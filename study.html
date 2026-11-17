@@ -17,6 +17,7 @@ p{color:#9ca3af;line-height:1.6}
 .card{background:#111827;border:1px solid #293548;border-radius:15px;padding:24px;cursor:pointer;transition:.2s}
 .card:hover{border-color:#22d3ee;transform:translateY(-3px)}
 .card h2{margin:8px 0;color:#fff}
+a.card{display:block;color:inherit;text-decoration:none}
 .card p{margin-bottom:0}
 .icon{font-size:32px}
 button{background:#22d3ee;color:#07111b;border:0;border-radius:9px;padding:12px 18px;font-weight:bold;cursor:pointer;margin-top:20px}
@@ -71,6 +72,12 @@ const subjects = {
 "12":["Physics","Chemistry","Biology","Mathematics","English"]
 };
 
+const chapterData = {
+"11|Physics":[
+{title:"Chapter 1: Units and Measurements",desc:"Units, dimensions, significant figures, errors \u2014 with notes, formulas, numericals and a practice quiz.",url:"physics-chapter-1.html"}
+]
+};
+
 const icons = {
 "Physics":"⚛️","Chemistry":"🧪","Biology":"🧬",
 "Mathematics":"📐","Science":"🔬",
@@ -107,14 +114,29 @@ function selectSubject(subject){
 document.getElementById("subjects").classList.add("hidden");
 document.getElementById("chapters").classList.remove("hidden");
 document.getElementById("subjectTitle").textContent=subject+" — Class "+currentClass;
-document.getElementById("chapterDescription").textContent="Chapter-wise learning content will be added here.";
+const list=chapterData[currentClass+"|"+subject]||[];
+document.getElementById("chapterDescription").textContent=list.length?"Pick a chapter to start learning.":"Chapter-wise learning content will be added here.";
 
 const grid=document.getElementById("chapterGrid");
 grid.innerHTML="";
+list.forEach(ch=>{
+const link=document.createElement("a");
+link.className="card";
+link.href=ch.url;
+const icon=document.createElement("div");
+icon.className="icon";
+icon.textContent="\ud83d\udcd0";
+const title=document.createElement("h2");
+title.textContent=ch.title;
+const desc=document.createElement("p");
+desc.textContent=ch.desc;
+link.append(icon,title,desc);
+grid.appendChild(link);
+});
 const card=document.createElement("div");
 card.className="card";
 const title=document.createElement("h2");
-title.textContent="📚 Chapters coming soon";
+title.textContent=list.length?"\ud83d\udcda More chapters coming soon":"\ud83d\udcda Chapters coming soon";
 const desc=document.createElement("p");
 desc.textContent="Notes, explanations, diagrams and practice questions will be available here.";
 card.append(title,desc);
