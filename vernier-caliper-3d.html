@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vernier Caliper 3D Lab | Sciora</title>
+<meta name="theme-color" content="#070b14">
+<style>
+:root{color-scheme:dark;--bg:#070b14;--panel:#111b2d;--line:#29384f;--cyan:#22d3ee;--text:#edf5ff;--muted:#a8b6cc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 Arial,sans-serif}
+header{position:sticky;top:0;background:#070b14ed;border-bottom:1px solid var(--line);padding:13px 16px;z-index:3}
+a{color:var(--cyan);text-decoration:none}
+.wrap{max-width:1000px;margin:auto;padding:18px 14px 40px}
+h1{font-size:clamp(24px,5vw,34px);margin:12px 0 5px}
+p{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin:14px 0}
+#view{height:390px;position:relative;border-radius:12px;overflow:hidden;background:radial-gradient(ellipse at center,#17243a,#080e19 70%)}
+#view canvas{display:block;width:100%;height:100%;touch-action:none}
+.hint{font-size:13px;margin:8px 2px;color:var(--muted)}
+.controls{display:grid;grid-template-columns:1fr;gap:12px}
+label{font-weight:700;display:block;margin-bottom:7px}
+input[type=range]{width:100%;accent-color:var(--cyan)}
+button{background:var(--cyan);color:#04131a;border:0;border-radius:10px;padding:11px 15px;font-weight:700}
+.secondary{background:#24334a;color:var(--text);border:1px solid #3b4c65}
+#reading{font-size:26px;color:var(--cyan);font-weight:800}
+.parts{display:flex;flex-wrap:wrap;gap:8px}
+.parts button{background:#24334a;color:var(--text);border:1px solid #3b4c65}
+.parts button.active{background:var(--cyan);color:#04131a}
+#info{min-height:60px}
+.note{font-size:13px;color:var(--muted)}
+@media(min-width:700px){.controls{grid-template-columns:1fr 1fr}#view{height:480px}}
+</style>
+</head>
+<body>
+<header><a href="physics-chapter-1.html">← Back to Physics Chapter 1</a></header>
+<main class="wrap">
+  <p style="color:#22d3ee;font-weight:bold;letter-spacing:.08em">SCIORA · INTERACTIVE 3D LAB</p>
+  <h1>Explore a Vernier Caliper</h1>
+  <p>Drag to rotate the model. Use the slider to move the sliding jaw. Tap a part name to learn what it does.</p>
+  <section class="panel">
+    <div id="view" aria-label="Interactive 3D Vernier caliper model"></div>
+    <div class="hint">Touch and drag to rotate · Pinch or scroll to zoom · Tap a part button to highlight it</div>
+    <div class="parts" id="parts">
+      <button class="active" data-part="beam">Main scale</button>
+      <button data-part="fixed">Fixed jaw</button>
+      <button data-part="slider">Sliding jaw</button>
+      <button data-part="vernier">Vernier scale</button>
+      <button data-part="depth">Depth rod</button>
+    </div>
+    <div id="info"><b>Main scale:</b> The long scale on the beam gives the main reading.</div>
+  </section>
+  <section class="panel controls">
+    <div>
+      <label for="position">Move the sliding jaw</label>
+      <input id="position" type="range" min="10" max="70" value="35">
+      <p class="note">Move the slider and watch the jaws open or close.</p>
+    </div>
+    <div>
+      <label>Illustrative reading</label>
+      <div id="reading">35.00 mm</div>
+      <p class="note">This is a simplified teaching model, not a calibrated measuring instrument.</p>
+      <button class="secondary" id="reset" type="button">Reset model view</button>
+    </div>
+  </section>
+  <section class="panel">
+    <h2>How a Vernier Caliper works</h2>
+    <ol>
+      <li>Place the object between the outside jaws.</li>
+      <li>Read the main scale just before the Vernier zero.</li>
+      <li>Find the Vernier division that lines up with a main-scale mark.</li>
+      <li>Total reading = main-scale reading + Vernier reading.</li>
+    </ol>
+  </section>
+</main>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+const host=document.getElementById('view');
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x0b1423);
+const camera=new THREE.PerspectiveCamera(38,host.clientWidth/host.clientHeight,.1,100);
+camera.position.set(0.4,4.8,9.5);
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(host.clientWidth,host.clientHeight);
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+host.appendChild(renderer.domElement);
+scene.add(new THREE.HemisphereLight(0xddeeff,0x28354b,2));
+const key=new THREE.DirectionalLight(0xffffff,2.2);key.position.set(3,7,5);scene.add(key);
+const model=new THREE.Group();scene.add(model);
+const mat=(color,metalness=.25,roughness=.38)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
+const steel=mat(0x9fb4c8,.8,.28), dark=mat(0x243b55,.5,.35), cyan=mat(0x22d3ee,.55,.25), gold=mat(0xfbbf24,.45,.3);
+function box(parent,name,x,y,z,w,h,d,material,part){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);m.position.set(x,y,z);m.userData.part=part;parent.add(m);return m;}
+const beam=box(model,'beam',0,0,0,7.6,.22,.38,steel,'beam');
+const fixedJaw=box(model,'fixedJaw',-3.35,-.58,0,.32,1.35,.42,steel,'fixed');
+box(model,'fixedTip',-3.05,-1.05,0,.75,.16,.42,steel,'fixed');
+const slider=new THREE.Group();model.add(slider);
+box(slider,'sliderBlock',0,.28,0,1.15,.52,.56,dark,'slider');
+box(slider,'movingJaw',.38,-.35,0,.28,1.12,.42,cyan,'slider');
+box(slider,'movingTip',.12,-.85,0,.72,.15,.42,cyan,'slider');
+box(model,'depthRod',3.9,.12,0,.8,.09,.1,gold,'depth');
+for(let i=0;i<=38;i++){
+ const x=-3.65+i*.19;
+ box(model,'tick',x,.135,.205,.018,.18,.018,i%5===0?gold:dark,'beam');
+}
+for(let i=0;i<=10;i++){
+ const x=-.47+i*.085;
+ box(slider,'vernierTick',x,.56,.29,.014,.14,.018, i===0?gold:cyan,'vernier');
+}
+const ground=new THREE.Mesh(new THREE.PlaneGeometry(12,8),new THREE.MeshStandardMaterial({color:0x0c1728,roughness:.9}));
+ground.rotation.x=-Math.PI/2;ground.position.y=-1.55;scene.add(ground);
+const grid=new THREE.GridHelper(12,24,0x263c58,0x182a40);grid.position.y=-1.53;scene.add(grid);
+let active='beam';
+function highlight(part){
+ active=part;
+ model.traverse(o=>{if(o.isMesh){const p=o.userData.part;o.material.emissive=new THREE.Color(p===part?0x164c5a:0x000000);o.material.emissiveIntensity=p===part?.55:0;}});
+ document.querySelectorAll('#parts button').forEach(b=>b.classList.toggle('active',b.dataset.part===part));
+ const descriptions={
+ beam:'<b>Main scale:</b> The long scale on the beam gives the main reading.',
+ fixed:'<b>Fixed jaw:</b> This jaw stays in place while measuring an object.',
+ slider:'<b>Sliding jaw:</b> This jaw moves to hold the object gently.',
+ vernier:'<b>Vernier scale:</b> Its aligned division helps read a fraction of a main-scale division.',
+ depth:'<b>Depth rod:</b> This thin rod can measure the depth of a hole or container.'
+ };
+ document.getElementById('info').innerHTML=descriptions[part];
+}
+document.querySelectorAll('#parts button').forEach(b=>b.addEventListener('click',()=>highlight(b.dataset.part)));
+const ray=new THREE.Raycaster(),pointer=new THREE.Vector2();
+renderer.domElement.addEventListener('click',e=>{
+ const r=renderer.domElement.getBoundingClientRect();
+ pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;
+ ray.setFromCamera(pointer,camera);
+ const hit=ray.intersectObjects(model.children,true).find(x=>x.object.userData.part);
+ if(hit)highlight(hit.object.userData.part);
+});
+let down=false,lastX=0,lastY=0,rotX=-.12,rotY=-.12,zoom=9.5;
+renderer.domElement.addEventListener('pointerdown',e=>{down=true;lastX=e.clientX;lastY=e.clientY;renderer.domElement.setPointerCapture(e.pointerId);});
+renderer.domElement.addEventListener('pointermove',e=>{if(!down)return;rotY+=(e.clientX-lastX)*.009;rotX+=(e.clientY-lastY)*.007;rotX=Math.max(-1.1,Math.min(1.1,rotX));lastX=e.clientX;lastY=e.clientY;});
+renderer.domElement.addEventListener('pointerup',()=>down=false);
+renderer.domElement.addEventListener('pointercancel',()=>down=false);
+renderer.domElement.addEventListener('wheel',e=>{zoom=Math.max(6,Math.min(15,zoom+e.deltaY*.008));camera.position.set(zoom*.04,zoom*.5,zoom);},{passive:true});
+const sliderInput=document.getElementById('position');
+function moveSlider(){const v=+sliderInput.value;slider.position.x=-2.45+(v-10)*.065;document.getElementById('reading').textContent=v.toFixed(2)+' mm';}
+sliderInput.addEventListener('input',moveSlider);moveSlider();
+document.getElementById('reset').addEventListener('click',()=>{rotX=-.12;rotY=-.12;zoom=9.5;camera.position.set(.4,4.8,9.5);sliderInput.value=35;moveSlider();highlight('beam');});
+function animate(){requestAnimationFrame(animate);model.rotation.x+=(rotX-model.rotation.x)*.08;model.rotation.y+=(rotY-model.rotation.y)*.08;renderer.render(scene,camera);}
+animate();
+new ResizeObserver(()=>{const w=host.clientWidth,h=host.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);}).observe(host);
+highlight('beam');
+</script>
+</body>
+</html>
