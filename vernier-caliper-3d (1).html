@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SCIORA – 3D Vernier Caliper</title>
+<style>
+:root{--bg:#0a1428;--panel:#111f3a;--line:#1f3358;--cy:#22d3ee;--tx:#e6eefc;--mu:#93a6c8}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.45}
+.wrap{max-width:900px;margin:0 auto;padding:14px 14px 40px}
+h1{font-size:1.25rem;margin:4px 0 2px}h1 span{color:var(--cy)}
+.sub{color:var(--mu);font-size:.9rem;margin:0 0 12px}
+.stage{position:relative;background:radial-gradient(ellipse at 50% 35%,#16284b,#0b1730 70%);border:1px solid var(--line);border-radius:14px;overflow:hidden;width:100%;aspect-ratio:4/3;max-height:62vh;min-height:240px}
+canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.hint{position:absolute;left:10px;bottom:8px;font-size:.75rem;color:var(--mu);pointer-events:none}
+#fb{display:none;position:absolute;inset:0;align-items:center;justify-content:center;text-align:center;padding:20px;background:#0b1730;color:#fca5a5;font-size:.95rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px}
+.card h2{font-size:1rem;margin:0 0 6px;color:var(--cy)}
+label{font-size:.9rem;color:var(--mu)}
+input[type=range]{width:100%;height:40px;accent-color:var(--cy);margin:4px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+button{min-height:48px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#0d1a33;color:var(--tx);font-size:.95rem;font-weight:600;cursor:pointer}
+button.on{background:var(--cy);color:#06202a;border-color:var(--cy)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:620px){.grid{grid-template-columns:repeat(4,1fr)}}
+.rd{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:.95rem}
+.rd b{color:var(--cy);text-align:right;font-variant-numeric:tabular-nums}
+.tot{border-top:1px solid var(--line);margin-top:6px;padding-top:6px;font-size:1.05rem}
+.f{background:#0b1730;border:1px dashed var(--cy);border-radius:8px;padding:8px 10px;margin:8px 0;text-align:center;font-weight:600}
+.note{font-size:.8rem;color:var(--mu)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1><span>SCIORA</span> · 3D Vernier Caliper</h1>
+<p class="sub">Drag to rotate · pinch or scroll to zoom · slide to measure</p>
+
+<div class="stage">
+<canvas id="c" aria-label="Interactive 3D Vernier caliper"></canvas>
+<div id="fb"></div>
+<div class="hint">Drag: rotate &nbsp;|&nbsp; Pinch / wheel: zoom</div>
+</div>
+
+<div class="card">
+<label for="sl">Move the sliding jaw: <b id="slv" style="color:#22d3ee">12.3</b> mm</label>
+<input id="sl" type="range" min="0" max="120" step="0.1" value="12.3">
+<div class="row"><button id="reset" style="flex:1">Reset view</button><button id="clr" style="flex:1">Clear selection</button></div>
+</div>
+
+<div class="card">
+<h2>Select a part</h2>
+<div class="grid" id="btns"></div>
+<div id="info" style="margin-top:10px"><b id="pn">Tap a part</b><div id="pd" class="note" style="font-size:.92rem">Choose a component above to highlight it and read what it does.</div></div>
+</div>
+
+<div class="card">
+<h2>Measurement simulation</h2>
+<div class="rd">
+<span>Main scale reading (whole mm)</span><b id="r1">0 mm</b>
+<span>Vernier reading (division × 0.1 mm)</span><b id="r2">0.0 mm</b>
+</div>
+<div class="rd tot"><span>Total reading</span><b id="r3">0.0 mm</b></div>
+<div class="f">Total Reading = Main Scale Reading + Vernier Reading</div>
+<div class="note">Main scale reading: the last whole-mm mark left of the vernier zero. Vernier reading: the number of the vernier line that lines up with a main-scale line, × least count (1 mm − 0.9 mm = 0.1 mm).<br><br><b>Note:</b> this simulation uses illustrative values and is not a calibrated physical instrument.</div>
+</div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var cv=document.getElementById('c'),fb=document.getElementById('fb'),sl=document.getElementById('sl');
+var ctx=null;
+function showFb(m){fb.style.display='flex';fb.textContent=m;}
+try{ctx=cv.getContext('2d');}catch(e){}
+if(!ctx){showFb('3D view could not start: Canvas 2D is not supported in this browser.');}
+
+var PARTS={
+beam:['Main scale / beam','The long steel bar carrying the fixed main scale, graduated in millimetres (numbers are centimetres). The fixed jaws are part of it.'],
+fixed:['Fixed jaw','Rigid jaws at the zero end of the beam. They give the fixed reference face against which the object is measured.'],
+moving:['Moving (sliding) jaw','The slider and its jaws move along the beam. The distance it travels from zero is the length being measured.'],
+vernier:['Vernier scale','Small sliding scale with 10 divisions spanning 9 mm. It lets you read a tenth of a millimetre (least count 0.1 mm).'],
+inside:['Inside jaws','The two small upper jaws, used to measure internal sizes such as the diameter of a hole or tube.'],
+outside:['Outside jaws','The two large lower jaws, used to measure the outer size of objects such as rods, balls or blocks.'],
+screw:['Locking screw','Knurled screw on the slider. Tighten it to hold the reading so it can be read safely after removing the caliper.'],
+depth:['Depth measuring rod','A thin rod fixed to the slider that slides out of the beam end. Used to measure the depth of holes and steps.']
+};
+var order=['beam','fixed','moving','vernier','inside','outside','screw','depth'];
+var sel=null,bw=document.getElementById('btns');
+order.forEach(function(k){var b=document.createElement('button');b.textContent=PARTS[k][0].replace(' / beam','').replace(' (sliding)','');b.setAttribute('data-k',k);b.onclick=function(){pick(k);};bw.appendChild(b);});
+function pick(k){sel=k;[].forEach.call(bw.children,function(b){b.className=b.getAttribute('data-k')===k?'on':'';});
+ document.getElementById('pn').textContent=k?PARTS[k][0]:'Tap a part';
+ document.getElementById('pd').textContent=k?PARTS[k][1]:'Choose a component above to highlight it and read what it does.';}
+document.getElementById('clr').onclick=function(){pick(null);};
+
+/* ---------- state ---------- */
+var yaw=-0.5,pitch=0.28,zoom=1,P0=12.3,idle=true,W=320,H=240,dpr=1;
+var D=650,C=[105,-12,0];
+function readout(){
+ var v=Math.round(P0*10)/10,m=Math.floor(v+1e-9),d=Math.round((v-m)*10);if(d>9){m+=1;d=0;}
+ document.getElementById('slv').textContent=v.toFixed(1);
+ document.getElementById('r1').textContent=m+' mm';
+ document.getElementById('r2').textContent=d+' × 0.1 = '+(d/10).toFixed(1)+' mm';
+ document.getElementById('r3').textContent=(m+d/10).toFixed(1)+' mm';}
+sl.addEventListener('input',function(){P0=parseFloat(sl.value)||0;readout();});
+document.getElementById('reset').onclick=function(){yaw=-0.5;pitch=0.28;zoom=1;idle=false;};
+readout();
+
+/* ---------- model ---------- */
+var STEEL=[178,188,198],DARK=[150,160,173],PLATE=[208,215,223],ROD=[140,150,162];
+function box(x0,x1,y0,y1,z0,z1,t,col,deco){
+ var c=[(x0+x1)/2,(y0+y1)/2,(z0+z1)/2],V=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+ return [[0,1,2,3],[4,5,6,7],[0,1,5,4],[3,2,6,7],[0,3,7,4],[1,2,6,5]].map(function(f,i){
+  return {v:f.map(function(j){return V[j];}),c:c,t:t,col:col,deco:i===1?deco:null};});}
+function cyl(cx,cz,r,y0,y1,n,t,col){
+ var c=[cx,(y0+y1)/2,cz],out=[],top=[],i,a0,a1;
+ for(i=0;i<n;i++){a0=i/n*6.2832;a1=(i+1)/n*6.2832;
+  var p0=[cx+r*Math.cos(a0),0,cz+r*Math.sin(a0)],p1=[cx+r*Math.cos(a1),0,cz+r*Math.sin(a1)];
+  out.push({v:[[p0[0],y0,p0[2]],[p1[0],y0,p1[2]],[p1[0],y1,p1[2]],[p0[0],y1,p0[2]]],c:c,t:t,col:col});
+  top.push([p0[0],y1,p0[2]]);}
+ out.push({v:top,c:c,t:t,col:col});return out;}
+function model(p){
+ var m=[];
+ m=m.concat(box(0,190,-9,9,-2,2,['beam'],STEEL,'main'));
+ m=m.concat(box(0,8,-60,-9,-2,2,['fixed','outside'],DARK));
+ m=m.concat(box(0,6,9,34,-2,2,['fixed','inside'],DARK));
+ m=m.concat(box(8+p,48+p,-13,0,-4,4,['moving'],[160,168,180]));
+ m=m.concat(box(8+p,44+p,-9,0,4,4.8,['vernier'],PLATE,'vern'));
+ m=m.concat(box(8+p,16+p,-60,-13,-2,2,['moving','outside'],DARK));
+ m=m.concat(box(8+p,14+p,9,34,-2,2,['moving','inside'],DARK));
+ m=m.concat(box(8+p,14+p,0,9,2,3.6,['moving','inside'],DARK));
+ m=m.concat(cyl(p+40,0,5,0,7,14,['screw'],[120,127,138]));
+ m=m.concat(box(p+10,p+190,-1.6,1.6,-3.6,-2,['depth'],ROD));
+ return m;}
+
+/* ---------- 3D math ---------- */
+var cy_,sy_,cp_,sp_,F;
+function tf(q){var x=q[0]-C[0],y=q[1]-C[1],z=q[2]-C[2];
+ var x1=x*cy_+z*sy_,z1=-x*sy_+z*cy_,y2=y*cp_-z1*sp_,z2=y*sp_+z1*cp_;return [x1,y2,z2];}
+function pr(t){var s=F/(D-t[2]);return [W/2+t[0]*s,H/2-t[1]*s];}
+function P(x,y,z){return pr(tf([x,y,z]));}
+function mix(c,k,s){var r=[],i;for(i=0;i<3;i++)r.push(Math.max(0,Math.min(255,Math.round(c[i]*k+s))));return 'rgb('+r[0]+','+r[1]+','+r[2]+')';}
+function text(s,x,y,z,size,col){
+ var o=P(x,y,z),a=P(x+1,y,z),u=P(x,y+1,z);
+ ctx.save();ctx.transform((a[0]-o[0])*size,(a[1]-o[1])*size,-(u[0]-o[0])*size,-(u[1]-o[1])*size,o[0],o[1]);
+ ctx.fillStyle=col;ctx.font='bold 1px sans-serif';ctx.textAlign='center';ctx.fillText(s,0,0);ctx.restore();}
+function line(x0,y0,x1,y1,z,lw,col){var a=P(x0,y0,z),b=P(x1,y1,z);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.lineWidth=lw;ctx.strokeStyle=col;ctx.stroke();}
+function decoMain(){var s=F/D,lw=Math.max(.7,.3*s),k,len;
+ for(k=0;k<=150;k++){len=k%10===0?5:k%5===0?4:2.8;line(8+k,.5,8+k,.5+len,2.02,lw,'#101826');
+  if(k%10===0)text(String(k/10),8+k,5.9,2.02,2.7,'#101826');}
+ line(8,.5,158,.5,2.02,lw,'#101826');}
+function decoVern(p){var s=F/D,lw=Math.max(.7,.3*s),i;
+ for(i=0;i<=10;i++){line(8+p+.9*i,-.2,8+p+.9*i,-(i%5===0?4.6:3),4.82,lw,'#101826');
+  if(i%5===0)text(String(i),8+p+.9*i,-8,4.82,2.6,'#101826');}
+ line(8+p,-.2,8+p+9,-.2,4.82,lw,'#101826');}
+
+/* ---------- render ---------- */
+function draw(t){
+ if(!ctx)return;
+ ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+ var yw=yaw+(idle?Math.sin(t/1400)*0.35:0);
+ cy_=Math.cos(yw);sy_=Math.sin(yw);cp_=Math.cos(pitch);sp_=Math.sin(pitch);
+ F=Math.min(W/330,H/170)*zoom*D;
+ var p=Math.round(P0*10)/10;
+ /* floor shadow */
+ var g0=P(105,-66,0),sc=F/D;
+ ctx.save();ctx.translate(g0[0],g0[1]);ctx.scale(1,Math.abs(sp_)*0.7+0.1);
+ var rg=ctx.createRadialGradient(0,0,0,0,0,170*sc);rg.addColorStop(0,'rgba(0,0,0,.45)');rg.addColorStop(1,'rgba(0,0,0,0)');
+ ctx.fillStyle=rg;ctx.beginPath();ctx.arc(0,0,170*sc,0,6.2832);ctx.fill();ctx.restore();
+ /* faces */
+ var faces=model(p),vis=[],i,j,f;
+ for(i=0;i<faces.length;i++){f=faces[i];
+  var tv=f.v.map(tf),a=tv[0],b=tv[1],c=tv[2];
+  var u=[b[0]-a[0],b[1]-a[1],b[2]-a[2]],v=[c[0]-a[0],c[1]-a[1],c[2]-a[2]];
+  var n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],l=Math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]);
+  if(l<1e-6)continue;n=[n[0]/l,n[1]/l,n[2]/l];
+  var g=[0,0,0];for(j=0;j<tv.length;j++){g[0]+=tv[j][0];g[1]+=tv[j][1];g[2]+=tv[j][2];}
+  g=[g[0]/tv.length,g[1]/tv.length,g[2]/tv.length];
+  var cc=tf(f.c);if(n[0]*(g[0]-cc[0])+n[1]*(g[1]-cc[1])+n[2]*(g[2]-cc[2])<0)n=[-n[0],-n[1],-n[2]];
+  if(n[0]*(0-g[0])+n[1]*(0-g[1])+n[2]*(D-g[2])<=0)continue;
+  vis.push({f:f,tv:tv,n:n,z:g[2]});}
+ vis.sort(function(a,b){return a.z-b.z;});
+ var L=[-.45,.6,.66],ll=Math.sqrt(L[0]*L[0]+L[1]*L[1]+L[2]*L[2]);L=[L[0]/ll,L[1]/ll,L[2]/ll];
+ var H2=[L[0],L[1],L[2]+1],hl=Math.sqrt(H2[0]*H2[0]+H2[1]*H2[1]+H2[2]*H2[2]);H2=[H2[0]/hl,H2[1]/hl,H2[2]/hl];
+ for(i=0;i<vis.length;i++){var e=vis[i];f=e.f;n=e.n;
+  var d=Math.max(0,n[0]*L[0]+n[1]*L[1]+n[2]*L[2]),sp=Math.pow(Math.max(0,n[0]*H2[0]+n[1]*H2[1]+n[2]*H2[2]),38);
+  var k=.28+.55*d+.17*(.5+.5*n[1]),on=sel&&f.t.indexOf(sel)>=0,tint=on?35:0;
+  var pts=e.tv.map(pr),x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  for(j=0;j<pts.length;j++){x0=Math.min(x0,pts[j][0]);y0=Math.min(y0,pts[j][1]);x1=Math.max(x1,pts[j][0]);y1=Math.max(y1,pts[j][1]);}
+  var fill;
+  try{var gr=ctx.createLinearGradient(x0,y0,x1+.01,y1+.01);
+   gr.addColorStop(0,mix(f.col,k*.98,sp*120+tint));gr.addColorStop(.4,mix(f.col,k*1.2,sp*140+tint));gr.addColorStop(1,mix(f.col,k*.8,sp*60+tint));fill=gr;}
+  catch(er){fill=mix(f.col,k,sp*120+tint);}
+  ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(j=1;j<pts.length;j++)ctx.lineTo(pts[j][0],pts[j][1]);ctx.closePath();
+  ctx.fillStyle=fill;ctx.fill();
+  if(on){ctx.fillStyle='rgba(34,211,238,.38)';ctx.fill();}
+  ctx.lineJoin='round';ctx.lineWidth=on?2.2:.8;ctx.strokeStyle=on?'#22d3ee':'rgba(20,28,44,.55)';ctx.stroke();
+  if(f.deco&&n[2]>.12){try{if(f.deco==='main')decoMain();else decoVern(p);}catch(er2){}}
+ }
+}
+
+/* ---------- sizing ---------- */
+function resize(){
+ var r=cv.getBoundingClientRect();
+ W=Math.max(2,Math.round(r.width))||320;H=Math.max(2,Math.round(r.height))||240;
+ dpr=Math.min(window.devicePixelRatio||1,2);
+ cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
+window.addEventListener('resize',function(){resize();});
+window.addEventListener('orientationchange',function(){setTimeout(resize,250);});
+if(window.ResizeObserver){try{new ResizeObserver(resize).observe(cv);}catch(e){}}
+
+/* ---------- input ---------- */
+var ptr={},last=0;
+function cnt(){return Object.keys(ptr).length;}
+function dist(){var k=Object.keys(ptr);if(k.length<2)return 0;var a=ptr[k[0]],b=ptr[k[1]];return Math.hypot(a.x-b.x,a.y-b.y);}
+cv.addEventListener('pointerdown',function(e){try{cv.setPointerCapture(e.pointerId);}catch(x){}
+ ptr[e.pointerId]={x:e.clientX,y:e.clientY};idle=false;last=dist();cv.style.cursor='grabbing';e.preventDefault();});
+cv.addEventListener('pointermove',function(e){var q=ptr[e.pointerId];if(!q)return;
+ var dx=e.clientX-q.x,dy=e.clientY-q.y;q.x=e.clientX;q.y=e.clientY;
+ if(cnt()>=2){var d=dist();if(last>0&&d>0)zoom=Math.max(.5,Math.min(6,zoom*d/last));last=d;}
+ else{yaw+=dx*.01;pitch=Math.max(-1.5,Math.min(1.5,pitch+dy*.01));}
+ e.preventDefault();});
+function up(e){delete ptr[e.pointerId];last=dist();if(!cnt())cv.style.cursor='grab';}
+cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);cv.addEventListener('lostpointercapture',up);
+cv.addEventListener('wheel',function(e){zoom=Math.max(.5,Math.min(6,zoom*Math.exp(-e.deltaY*.001)));idle=false;e.preventDefault();},{passive:false});
+cv.addEventListener('touchmove',function(e){e.preventDefault();},{passive:false});
+
+/* ---------- loop ---------- */
+var errs=0;
+function frame(t){
+ try{draw(t);errs=0;fb.style.display=ctx?'none':'flex';}
+ catch(e){errs++;if(errs>=3)showFb('3D rendering error: '+(e&&e.message?e.message:e)+'. The controls and readings still work.');}
+ if(errs<30)requestAnimationFrame(frame);}
+resize();
+try{draw(0);}catch(e0){errs++;}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
