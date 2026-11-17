@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sciora - Study Dashboard</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#070b14;color:#f1f5f9;font-family:Arial,sans-serif;padding:24px}
+header{max-width:1000px;margin:auto}
+.logo{font-size:28px;font-weight:bold;color:#22d3ee}
+h1{font-size:32px;margin-top:45px}
+p{color:#9ca3af;line-height:1.6}
+.container{max-width:1000px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-top:25px}
+.card{background:#111827;border:1px solid #293548;border-radius:15px;padding:24px;cursor:pointer;transition:.2s}
+.card:hover{border-color:#22d3ee;transform:translateY(-3px)}
+.card h2{margin:8px 0;color:#fff}
+.card p{margin-bottom:0}
+.icon{font-size:32px}
+button{background:#22d3ee;color:#07111b;border:0;border-radius:9px;padding:12px 18px;font-weight:bold;cursor:pointer;margin-top:20px}
+.hidden{display:none}
+#content{margin-top:40px}
+.badge{color:#22d3ee;font-size:13px}
+footer{text-align:center;color:#64748b;margin:70px 0 20px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">✦ Sciora</div>
+<p>Your journey to understanding begins here.</p>
+</header>
+
+<main class="container">
+<section id="classes">
+<h1>Choose Your Class</h1>
+<p>Select your class to explore subjects and start learning.</p>
+<div class="grid">
+<div class="card" onclick="selectClass('9')"><div class="icon">📘</div><h2>Class 9</h2><p>Explore your subjects</p></div>
+<div class="card" onclick="selectClass('10')"><div class="icon">📗</div><h2>Class 10</h2><p>Build your foundation</p></div>
+<div class="card" onclick="selectClass('11')"><div class="icon">📙</div><h2>Class 11</h2><p>Explore your stream</p></div>
+<div class="card" onclick="selectClass('12')"><div class="icon">📕</div><h2>Class 12</h2><p>Prepare for your future</p></div>
+</div>
+</section>
+
+<section id="subjects" class="hidden">
+<button onclick="goBack('classes')">← Back to Classes</button>
+<h1 id="classTitle">Choose a Subject</h1>
+<p>Select a subject to explore its chapters.</p>
+<div class="grid" id="subjectGrid"></div>
+</section>
+
+<section id="chapters" class="hidden">
+<button onclick="goBack('subjects')">← Back to Subjects</button>
+<h1 id="subjectTitle">Chapters</h1>
+<p id="chapterDescription">Your learning journey starts here.</p>
+<div class="grid" id="chapterGrid"></div>
+</section>
+</main>
+
+<footer>© 2026 Sciora · Learn. Understand. Grow.</footer>
+
+<script>
+let currentClass = "";
+
+const subjects = {
+"9":["Science","Mathematics","Social Science","English"],
+"10":["Science","Mathematics","Social Science","English"],
+"11":["Physics","Chemistry","Biology","Mathematics","English"],
+"12":["Physics","Chemistry","Biology","Mathematics","English"]
+};
+
+const icons = {
+"Physics":"⚛️","Chemistry":"🧪","Biology":"🧬",
+"Mathematics":"📐","Science":"🔬",
+"Social Science":"🌍","English":"📖"
+};
+
+function selectClass(cls){
+currentClass=cls;
+document.getElementById("classes").classList.add("hidden");
+document.getElementById("subjects").classList.remove("hidden");
+document.getElementById("classTitle").textContent="Class "+cls+" — Choose Your Subject";
+
+const grid=document.getElementById("subjectGrid");
+grid.innerHTML="";
+
+subjects[cls].forEach(subject=>{
+const card=document.createElement("div");
+card.className="card";
+const icon=document.createElement("div");
+icon.className="icon";
+icon.textContent=icons[subject]||"📚";
+const title=document.createElement("h2");
+title.textContent=subject;
+const desc=document.createElement("p");
+desc.textContent="Explore "+subject+" lessons";
+card.append(icon,title,desc);
+card.onclick=()=>selectSubject(subject);
+grid.appendChild(card);
+});
+window.scrollTo(0,0);
+}
+
+function selectSubject(subject){
+document.getElementById("subjects").classList.add("hidden");
+document.getElementById("chapters").classList.remove("hidden");
+document.getElementById("subjectTitle").textContent=subject+" — Class "+currentClass;
+document.getElementById("chapterDescription").textContent="Chapter-wise learning content will be added here.";
+
+const grid=document.getElementById("chapterGrid");
+grid.innerHTML="";
+const card=document.createElement("div");
+card.className="card";
+const title=document.createElement("h2");
+title.textContent="📚 Chapters coming soon";
+const desc=document.createElement("p");
+desc.textContent="Notes, explanations, diagrams and practice questions will be available here.";
+card.append(title,desc);
+grid.appendChild(card);
+window.scrollTo(0,0);
+}
+
+function goBack(section){
+["classes","subjects","chapters"].forEach(id=>{
+document.getElementById(id).classList.add("hidden");
+});
+document.getElementById(section).classList.remove("hidden");
+window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
