@@ -6,24 +6,26 @@ platform. Plain HTML, CSS and JavaScript — no build step, no frameworks, ready
 ## Project structure
 
 ```
-premium-website/
-├── index.html      # The page: nav, hero, about, subjects, features, contact, footer
-├── css/
-│   └── style.css   # Design tokens, components, animations, responsive rules
-├── js/
-│   └── main.js     # Theme, mobile nav, scroll reveal, scrollspy, counters, form validation
+sciora/
+├── index.html                                  # Homepage (opens first)
+├── study.html                                  # Study dashboard: class -> subject -> chapters
+├── physics-chapter-1.html                      # Class 11 Physics Ch.1 lesson
+├── SCI0RA_Physics_Chapter_1_Visual_Lab.html    # Ch.1 Visual Lab
+├── Class_11_Physics_Ch1_Visual_Animated.html   # Ch.1 animated visual lesson
+├── Class_11_Physics_Ch1_Teaching_Deck.html     # Ch.1 48-slide deck
+├── vernier-caliper-3d.html                     # Interactive 3D vernier caliper
+├── style.css                                   # Homepage styles
+├── main.js                                     # Homepage scripts
 ├── README.md
-└── .nojekyll       # Tells GitHub Pages to serve the files as-is
+└── .nojekyll
 ```
 
-Both asset paths are relative — `index.html` loads `css/style.css` and `js/main.js` with no
-leading slash — so the site works from the repository root, from a `/repo-name/` project URL,
-and from `file://` on your own machine. File names are lowercase and match exactly, because
-GitHub Pages is case-sensitive.
+All paths are relative and flat, so the site works from the repository root, a `/repo-name/`
+project URL, and `file://`. File names are case-sensitive on GitHub Pages.
 
 ## Deploying to GitHub Pages
 
-1. Put these five items in the repository root, with the `css/` and `js/` folders kept intact.
+1. Put all files in the repository root.
 2. Repo → **Settings** → **Pages**.
 3. Under *Build and deployment*, set Source to **Deploy from a branch**.
 4. Branch: `main`, folder: `/ (root)` → **Save**.
