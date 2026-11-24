@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://payal876malviya-cpu.github.io/sciora/sitemap.xml
